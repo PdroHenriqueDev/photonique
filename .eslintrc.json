@@ -6,10 +6,21 @@
         "node": true
     },
     "extends": [
+        "eslint:recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
-        "airbnb-typescript/base"
+        "airbnb-typescript/base",
+        "plugin:react/jsx-runtime",
+        "plugin:import/recommended"
     ],
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"],
+            "moduleDirectory": ["node_modules"]
+          }
+        }
+    },
     "parserOptions": {
         "project": ["./tsconfig.json"],
         "ecmaFeatures": {
@@ -22,6 +33,6 @@
         "react"
     ]
     // "rules": {
-
+    //     "import/extensions": [ "error", "ignorePackages", { "": "never" } ]
     // }
 }
