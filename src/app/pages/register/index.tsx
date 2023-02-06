@@ -1,8 +1,10 @@
+import { Container } from './style';
+
 function Register() {
   return (
-    <div>
+    <Container>
         oi
-    </div>
+    </Container>
   );
 }
 
