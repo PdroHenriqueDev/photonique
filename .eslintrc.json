@@ -31,8 +31,8 @@
     },
     "plugins": [
         "react"
-    ]
-    // "rules": {
-    //     "import/extensions": [ "error", "ignorePackages", { "": "never" } ]
-    // }
+    ],
+    "rules": {
+        "react/prop-types": "off"
+    }
 }

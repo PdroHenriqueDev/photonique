@@ -1,9 +1,10 @@
-import { Container } from './style';
+import { Container } from './styles';
+import Form from './components/form';
 
 function Register() {
   return (
     <Container>
-        oi
+        <Form />
     </Container>
   );
 }
