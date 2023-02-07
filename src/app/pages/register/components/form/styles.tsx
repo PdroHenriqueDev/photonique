@@ -8,8 +8,8 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #161616;
     border-radius: 10px;
+    background-color: ${({ theme }) => theme.colors.primary.dark};
 
     button {
         margin-top: 16px;
@@ -18,6 +18,19 @@ export const Container = styled.div`
 
 export const TextLogin = styled.span`
     font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+`;
+
+export const TextWelcome = styled.span`
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 16px;
+`;
+
+export const TextRegister = styled.span`
+    font-size: 12px;
     font-weight: 500;
     color: #fff;
     margin-bottom: 16px;
