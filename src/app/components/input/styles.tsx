@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Input = styled.input`
     width: 100%;
     border: none;
-    background: #fff;
-    border: 2px solid #fff;
+    background: ${(({ theme }) => theme.colors.primary.lighter)};;
+    border: 2px solid ${(({ theme }) => theme.colors.primary.lighter)};;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
     height: 52px;
     border-radius: 4px;
@@ -17,4 +17,8 @@ export const Input = styled.input`
     & + & {
         margin-top: 16px;
     }
+`;
+
+export const Label = styled.label`
+    color: ${(({ theme }) => theme.colors.primary.lighter)};
 `;

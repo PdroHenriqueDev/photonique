@@ -19,19 +19,19 @@ export const Container = styled.div`
 export const TextLogin = styled.span`
     font-size: 36px;
     font-weight: 600;
-    color: #fff;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
     margin-bottom: 8px;
 `;
 
 export const TextWelcome = styled.span`
     font-size: 14px;
-    color: #fff;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
     margin-bottom: 16px;
 `;
 
 export const TextRegister = styled.span`
     font-size: 12px;
     font-weight: 500;
-    color: #fff;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
     margin-bottom: 16px;
 `;

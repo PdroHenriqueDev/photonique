@@ -6,8 +6,8 @@ function Form() {
   return (
     <Container>
         <TextLogin>Log in</TextLogin>
-        <TextWelcome>Sem bem vindo, por favor, faço o login</TextWelcome>
-        < Input/>
+        <TextWelcome>Seja bem-vindo, por favor, faço o login</TextWelcome>
+        < Input label='Email'/>
         < Input/>
         < Button label='Log in' />
         <TextRegister>Não tem uma conta? Cadastre-se</TextRegister>

@@ -1,8 +1,16 @@
-import { Input } from './styles';
+import { Input, Label } from './styles';
+import { InputProps } from '../../models/components/input.model';
 
-function Form() {
+function Form(props: InputProps) {
+  const { label } = props;
+  const labelExists = (label && label?.length > 0) || false;
   return (
-    <Input />
+    <>
+        { labelExists &&
+            <Label>{label}</Label>
+        }
+        <Input />
+    </>
   );
 }
 
