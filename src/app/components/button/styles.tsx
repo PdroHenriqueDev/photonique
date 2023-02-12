@@ -4,7 +4,7 @@ export const DynamicButton = styled.button`
     height: 52px;
     border: none;
     padding: 0 16px;
-    background-color: ${(({ theme }) => theme.colors.primary.lighter)};
+    background-color: ${(({ theme }) => theme.colors.primary.main)};
     font-size: 16px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
     font-weight: bold;

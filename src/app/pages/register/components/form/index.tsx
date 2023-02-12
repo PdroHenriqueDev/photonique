@@ -1,16 +1,22 @@
 import Button from '../../../../components/button';
 import Input from '../../../../components/input';
-import { Container, TextLogin, TextRegister, TextWelcome } from './styles';
+import { Container, InputContainer, Label, TextLogin, TextRegister, TextWelcome } from './styles';
 
 function Form() {
   return (
     <Container>
         <TextLogin>Log in</TextLogin>
-        <TextWelcome>Seja bem-vindo, por favor, faço o login</TextWelcome>
-        < Input label='Email'/>
-        < Input/>
-        < Button label='Log in' />
-        <TextRegister>Não tem uma conta? Cadastre-se</TextRegister>
+        <TextWelcome>Junte-se a nós e acesse sua conta</TextWelcome>
+        <InputContainer>
+            <Label>Email:</Label>
+            < Input/>
+        </InputContainer>
+        <InputContainer>
+            <Label>Senha:</Label>
+            < Input type="password"/>
+        </InputContainer>
+        < Button label='log in' />
+        <TextRegister>Não tem uma conta? <strong>Cadastre-se</strong></TextRegister>
     </Container>
   );
 }

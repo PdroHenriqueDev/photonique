@@ -10,7 +10,7 @@ export const GlobalStyle =  createGlobalStyle`
 
     body {
         background-color: ${({ theme }) => theme.colors.background};
-        color: ${({ theme }) => theme.colors.primary.lighter};
+        color: ${({ theme }) => theme.colors.primary.light};
         font-size: 16px;
     }
 

@@ -12,7 +12,8 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.colors.primary.dark};
 
     button {
-        margin-top: 16px;
+        margin-top: 30px;
+        width: 100%;
     }
 `;
 
@@ -29,9 +30,26 @@ export const TextWelcome = styled.span`
     margin-bottom: 16px;
 `;
 
-export const TextRegister = styled.span`
-    font-size: 12px;
-    font-weight: 500;
+export const InputContainer = styled.div`
+    width: 100%;
+    & + & {
+        margin-top: 16px;
+    }
+`;
+
+export const Label = styled.span`
+    font-size: 14px;
+    /* font-weight: bold; */
     color: ${(({ theme }) => theme.colors.primary.lighter)};;
     margin-bottom: 16px;
+`;
+
+export const TextRegister = styled.span`
+    font-size: 12px;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    margin-top: 16px;
+
+    strong {
+        text-decoration: underline;
+    }
 `;
