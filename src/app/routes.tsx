@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Register from './pages/register';
+import LoginComponent from './pages/login';
 
 export default function AppRoutes() {
   return (
         <Routes>
-            <Route path="/" element={ <Register /> } />
+            <Route path="/login" element={ <LoginComponent /> } />
         </Routes>
   );
 }
