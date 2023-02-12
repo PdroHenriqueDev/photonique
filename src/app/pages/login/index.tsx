@@ -1,10 +1,10 @@
+import Routes from './routes';
 import { Container } from './styles';
-import Form from './components/form';
 
 function Register() {
   return (
     <Container>
-        <Form />
+        <Routes />
     </Container>
   );
 }
