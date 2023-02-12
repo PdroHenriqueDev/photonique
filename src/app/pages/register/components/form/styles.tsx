@@ -8,17 +8,48 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #161616;
     border-radius: 10px;
+    background-color: ${({ theme }) => theme.colors.primary.dark};
 
     button {
-        margin-top: 16px;
+        margin-top: 30px;
+        width: 100%;
     }
 `;
 
 export const TextLogin = styled.span`
     font-size: 36px;
-    font-weight: 500;
-    color: #fff;
+    font-weight: 600;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    margin-bottom: 8px;
+`;
+
+export const TextWelcome = styled.span`
+    font-size: 14px;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
     margin-bottom: 16px;
+`;
+
+export const InputContainer = styled.div`
+    width: 100%;
+    & + & {
+        margin-top: 16px;
+    }
+`;
+
+export const Label = styled.span`
+    font-size: 14px;
+    /* font-weight: bold; */
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    margin-bottom: 16px;
+`;
+
+export const TextRegister = styled.span`
+    font-size: 12px;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    margin-top: 16px;
+
+    strong {
+        text-decoration: underline;
+    }
 `;
