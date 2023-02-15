@@ -10,7 +10,8 @@ interface IPalette {
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
-      background: string
+      background: string,
+      white: string,
       primary: IPalette,
       danger: IPalette,
       success: {

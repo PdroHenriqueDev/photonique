@@ -3,9 +3,9 @@ import { ButtonProps } from '../../models/components/button.model';
 import { DynamicButton } from './styles';
 
 export default function Button(props: ButtonProps) {
-  const { label } = props;
+  const { label, onClick } = props;
   return (
-        <DynamicButton>
+        <DynamicButton onClick={onClick}>
             {label}
         </DynamicButton>
   );

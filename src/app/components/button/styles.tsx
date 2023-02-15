@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const DynamicButton = styled.button`
     height: 52px;
+    width: 100%;
     border: none;
     padding: 0 16px;
     background-color: ${(({ theme }) => theme.colors.primary.main)};
