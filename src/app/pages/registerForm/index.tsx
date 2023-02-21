@@ -8,6 +8,7 @@ import { states } from '../../utils/variables/states-cities/states';
 import { citiesByState } from '../../utils/variables/states-cities/cities';
 import { cpfMask } from '../../utils/masks/cpf';
 import { phoneMask } from '../../utils/masks/phone';
+import { formatCEP } from '../../utils/masks/cep';
 
 
 function Form() {
@@ -33,6 +34,13 @@ function Form() {
     setPhone(maskedNumber);
   };
 
+  const [cep, setCep] = useState('');
+
+  const handleCepMask = (event: any) => {
+    const maskedCep = formatCEP(event.target.value);
+    setCep(maskedCep);
+  };
+
   return (
     <Container>
         <ContentContainer>
@@ -55,12 +63,12 @@ function Form() {
 
             <InputContainer>
                 <Label>Telefone/Celular:</Label>
-                < Input value={phone}  onChange={handleNumberMask}/>
+                < Input value={phone}  onChange={handleNumberMask} />
             </InputContainer>
 
             <InputContainer>
                 <Label>Cep:</Label>
-                < Input/>
+                < Input value={cep}  onChange={handleCepMask}/>
             </InputContainer>
 
             <InputContainer>
