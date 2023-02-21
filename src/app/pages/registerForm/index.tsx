@@ -7,6 +7,7 @@ import { gender } from '../../utils/variables/gender';
 import { states } from '../../utils/variables/states-cities/states';
 import { citiesByState } from '../../utils/variables/states-cities/cities';
 import { cpfMask } from '../../utils/masks/cpf';
+import { phoneMask } from '../../utils/masks/phone';
 
 
 function Form() {
@@ -19,10 +20,17 @@ function Form() {
 
   const [cpf, setCpf] = useState('');
 
-  const handleMask = (event: any) => {
+  const handleCpfMask = (event: any) => {
     const maskedCpf = cpfMask(event.target.value);
 
     setCpf(maskedCpf);
+  };
+
+  const [phone, setPhone] = useState('');
+
+  const handleNumberMask = (event: any) => {
+    const maskedNumber = phoneMask(event.target.value);
+    setPhone(maskedNumber);
   };
 
   return (
@@ -38,7 +46,7 @@ function Form() {
 
             <InputContainer>
                 <Label>CPF:</Label>
-                < Input value={cpf}  onChange={handleMask} maxLength='14'/>
+                < Input value={cpf}  onChange={handleCpfMask} maxLength='14'/>
             </InputContainer>
             <InputContainer>
                 <Label>Gênero:</Label>
@@ -47,7 +55,7 @@ function Form() {
 
             <InputContainer>
                 <Label>Telefone/Celular:</Label>
-                < Input/>
+                < Input value={phone}  onChange={handleNumberMask}/>
             </InputContainer>
 
             <InputContainer>
