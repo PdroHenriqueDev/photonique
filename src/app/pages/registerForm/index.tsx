@@ -1,9 +1,30 @@
+import { useState } from 'react';
 import Button from '@dynamicComponents/button';
 import Input from '@dynamicComponents/input';
 import DynamicSelect from '@dynamicComponents/select';
 import { Container, ContentContainer, FormGroup, FormGroupContainer, InputContainer, Label, TextLogin, TextWelcome } from './styles';
+import { gender } from '../../utils/variables/gender';
+import { states } from '../../utils/variables/states-cities/states';
+import { citiesByState } from '../../utils/variables/states-cities/cities';
+import { cpfMask } from '../../utils/masks/cpf';
+
 
 function Form() {
+  const [cities, setCities] = useState([]);
+
+  const handleStateChange = (event: any) => {
+    const citiesFiltered: any = citiesByState(event.target.value);
+    setCities(citiesFiltered);
+  };
+
+  const [cpf, setCpf] = useState('');
+
+  const handleMask = (event: any) => {
+    const maskedCpf = cpfMask(event.target.value);
+
+    setCpf(maskedCpf);
+  };
+
   return (
     <Container>
         <ContentContainer>
@@ -17,11 +38,11 @@ function Form() {
 
             <InputContainer>
                 <Label>CPF:</Label>
-                < Input/>
+                < Input value={cpf}  onChange={handleMask} maxLength='14'/>
             </InputContainer>
             <InputContainer>
                 <Label>Gênero:</Label>
-                < DynamicSelect/>
+                < DynamicSelect options={gender}/>
             </InputContainer>
 
             <InputContainer>
@@ -36,12 +57,12 @@ function Form() {
 
             <InputContainer>
                 <Label>Estado:</Label>
-                < DynamicSelect />
+                < DynamicSelect options={states} onChange={(e) => handleStateChange(e)}/>
             </InputContainer>
 
             <InputContainer>
                 <Label>Cidade:</Label>
-                < DynamicSelect />
+                < DynamicSelect options={cities}/>
             </InputContainer>
 
             <InputContainer>
@@ -64,75 +85,6 @@ function Form() {
                 <Label>Complemento:</Label>
                 < Input/>
             </InputContainer>
-            {/* <FormGroup>
-                <FormGroupContainer>
-                    <Label>Nome:</Label>
-                    < Input/>
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>CPF:</Label>
-                    < Input />
-                </FormGroupContainer>
-            </FormGroup>
-
-            <FormGroup>
-                <FormGroupContainer>
-                    <Label>Gênero:</Label>
-                    < DynamicSelect/>
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Número:</Label>
-                    < Input />
-                </FormGroupContainer>
-            </FormGroup>
-
-            <FormGroup>
-                <FormGroupContainer>
-                    <Label>Email:</Label>
-                    < Input />
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Telefone/Celular:</Label>
-                    < Input />
-                </FormGroupContainer>
-            </FormGroup>
-
-            <FormGroup>
-                <FormGroupContainer>
-                    <Label>Cep:</Label>
-                    < Input />
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Estado:</Label>
-                    < DynamicSelect />
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Cidade:</Label>
-                    < DynamicSelect />
-                </FormGroupContainer>
-            </FormGroup>
-
-            <FormGroup>
-                <FormGroupContainer>
-                    <Label>Logradouro:</Label>
-                    < Input />
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Número:</Label>
-                    < Input />
-                </FormGroupContainer>
-            </FormGroup>
-
-            <FormGroup>
-                <FormGroupContainer>
-                    <Label>Senha:</Label>
-                    < Input type="password"/>
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Confirme a senha:</Label>
-                    < Input type="password"/>
-                </FormGroupContainer>
-            </FormGroup> */}
 
             < Button label='Cadastrar' />
         </ContentContainer>

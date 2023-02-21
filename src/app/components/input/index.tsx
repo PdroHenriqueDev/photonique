@@ -5,7 +5,7 @@ import { InputProps } from '../../models/components/input.model';
 import { useState } from 'react';
 
 function Form(props: InputProps) {
-  const { type } = props;
+  const { type, onChange, value } = props;
   const defaultInput = type ? (type !== 'password') : true;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -20,9 +20,9 @@ function Form(props: InputProps) {
     <>
         {
             defaultInput
-              ? <Input />
+              ? <Input value={value}  onChange={onChange}/>
               : <InputPasswordContainer>
-                    <InputPassword type={inputType} />
+                    <InputPassword value={value} type={inputType} onChange={onChange}/>
                     { showPassword
                       ? <span onClick={solvePassword}><Visibility /> </span>
                       : <span onClick={solvePassword}><VisibilityOff /></span>
