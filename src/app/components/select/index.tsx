@@ -1,17 +1,20 @@
-// import { ButtonProps } from '../../models/components/button.model';
+import { SelectProps } from 'app/models/components/select.model';
 import { Select } from './styles';
 
-export default function DynamicSelect() {
-//   const { label } = props;
+export default function DynamicSelect(props : SelectProps) {
+  const { options, onChange } = props;
   return (
-        <Select>
-            <option value="">Sem valor</option>
-            <option value="">Teste 1</option>
-            <option value="">Teste 2</option>
-            <option value="">Teste 3</option>
-            <option value="">Teste 4</option>
-            <option value="">Teste 5</option>
-            <option value="">Teste 6</option>
-        </Select>
+    <Select onChange={onChange}>
+        <option value="">Selectione</option>
+        <>
+            {
+                options.map((option) => (
+                    <option key={option.id} value={option.id}>
+                        {option.name}
+                    </option>
+                ))
+            }
+        </>
+    </Select>
   );
 }
