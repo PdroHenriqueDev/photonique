@@ -1,10 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
-import Register from './pages/register';
+import LoginComponent from './pages/login';
+import { lazy, Suspense } from 'react';
+
+const RegisterForm = lazy(() => import('./pages/registerForm'));
 
 export default function AppRoutes() {
   return (
         <Routes>
-            <Route path="/" element={ <Register /> } />
+            <Route path="/*" element={ <LoginComponent /> } />
+            <Route path="/cadastrar" element={
+                        <Suspense fallback={<>...</>}>
+                            <RegisterForm />
+                        </Suspense>
+                     } />
         </Routes>
   );
 }
