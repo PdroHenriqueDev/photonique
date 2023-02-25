@@ -24,6 +24,11 @@ export const ContentContainer = styled.div`
     }
 `;
 
+export const FormRow = styled.div`
+  margin-top: 16px;
+  width: 100%;
+`;
+
 export const TextLogin = styled.span`
     font-size: 36px;
     font-weight: 600;
@@ -37,33 +42,15 @@ export const TextWelcome = styled.span`
     margin-left: 16px;
 `;
 
-export const InputContainer = styled.div`
-    width: 100%;
-    & + & {
-        margin-top: 16px;
-    }
-`;
-
 export const FormGroup = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    & + & {
-        /* margin-top: 16px; */
-    }
-`;
 
-export const FormGroupContainer = styled.div`
-    width: 100%;
-    & + & {
+    input + input {
         margin-left: 16px;
+        width: 40%;
     }
-`;
-
-export const Label = styled.span`
-    font-size: 14px;
-    color: ${(({ theme }) => theme.colors.primary.lighter)};;
-    margin-bottom: 16px;
 `;
 
 export const TextRegister = styled.span`

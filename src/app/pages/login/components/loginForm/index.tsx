@@ -1,7 +1,7 @@
+import { useNavigate  } from 'react-router-dom';
 import Button from '../../../../components/button';
 import Input from '../../../../components/input';
-import { Container, InputContainer, Label, TextLogin, TextRegister, TextWelcome } from './styles';
-import { useNavigate  } from 'react-router-dom';
+import { Container, TextLogin, TextRegister, TextWelcome, FormRow } from './styles';
 
 function Form() {
 
@@ -15,16 +15,15 @@ function Form() {
     <Container>
         <TextLogin>Log in</TextLogin>
         <TextWelcome>Junte-se a nós e acesse sua conta</TextWelcome>
-        <InputContainer>
-            <Label>Email:</Label>
-            < Input/>
-        </InputContainer>
-        <InputContainer>
-            <Label>Senha:</Label>
-            < Input type="password"/>
-        </InputContainer>
-        < Button label='log in' />
-        <TextRegister>Não tem uma conta? <strong onClick={registerRoute}>Cadastre-se</strong></TextRegister>
+        <FormRow>
+            <Input placeholder="Email" />
+        </FormRow>
+
+        <FormRow>
+            <Input type="password"/>
+        </FormRow>
+        <Button label='log in' />
+        <TextRegister>Não tem uma conta? <strong aria-hidden="true" onClick={registerRoute}>Cadastre-se</strong></TextRegister>
     </Container>
   );
 }
