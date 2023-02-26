@@ -31,4 +31,14 @@ export const Select = styled.select`
     transition: border-color 0.2s ease-in;
     appearance: none;
     cursor: pointer;
+
+    &:focus {
+        border-color: ${({ theme }) => theme.colors.primary.main};
+    }
+
+    &[disabled] {
+        background-color: ${({ theme }) => theme.colors.primary.light};
+        border-color: ${({ theme }) => theme.colors.primary.light};
+        opacity: 1;
+    }
 `;

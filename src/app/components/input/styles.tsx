@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { InputProps } from '../../models/components/input.model';
 
-
 export const Input = styled.input<InputProps>`
     width: 100%;
     border: none;
