@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const Form = styled.form``;
+
 export const Container = styled.div`
     width: 100%;
     display: flex;
@@ -32,13 +34,13 @@ export const FormRow = styled.div`
 export const TextLogin = styled.span`
     font-size: 36px;
     font-weight: 600;
-    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};
     margin-bottom: 8px;
 `;
 
 export const TextWelcome = styled.span`
     font-size: 14px;
-    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};
     margin-left: 16px;
 `;
 
@@ -47,7 +49,7 @@ export const FormGroup = styled.div`
     display: flex;
     flex-direction: row;
 
-    input + input {
+    div + div {
         margin-left: 16px;
         width: 40%;
     }
@@ -55,10 +57,15 @@ export const FormGroup = styled.div`
 
 export const TextRegister = styled.span`
     font-size: 12px;
-    color: ${(({ theme }) => theme.colors.primary.lighter)};;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};
     margin-top: 16px;
 
     strong {
         text-decoration: underline;
     }
+`;
+
+export const ErrorMessage = styled.span`
+    color: ${(({ theme }) => theme.colors.danger.light)};
+    font-size: 10px;
 `;
