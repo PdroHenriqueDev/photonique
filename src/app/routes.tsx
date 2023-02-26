@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import LoginComponent from './pages/login';
 import { lazy, Suspense } from 'react';
 
-const RegisterForm = lazy(() => import('./pages/registerForm'));
+const RegisterForm = lazy(() => import('./pages/register'));
 
 export default function AppRoutes() {
   return (
