@@ -5,7 +5,7 @@ import { InputProps } from '../../models/components/input.model';
 import { useState } from 'react';
 
 function Form(props: InputProps) {
-  const { type, onChange, value, placeholder } = props;
+  const { type, onChange, value, placeholder, error, onKeyDown } = props;
   const defaultInput = type ? (type !== 'password') : true;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -20,9 +20,9 @@ function Form(props: InputProps) {
     <>
         {
             defaultInput
-              ? <Input value={value}  onChange={onChange} placeholder={placeholder}/>
+              ? <Input value={value} placeholder={placeholder} error={error} onChange={onChange} onKeyDown={onKeyDown} />
               : <InputPasswordContainer>
-                    <InputPassword value={value} type={inputType} onChange={onChange} placeholder='Senha'/>
+                    <InputPassword value={value} type={inputType} placeholder='Senha' error={error} onChange={onChange} onKeyDown={onKeyDown} />
                     { showPassword
                       ? <span aria-hidden="true" onClick={solvePassword}><Visibility /> </span>
                       : <span aria-hidden="true" onClick={solvePassword}><VisibilityOff /></span>
