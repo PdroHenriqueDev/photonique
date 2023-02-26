@@ -11,7 +11,12 @@
         "plugin:react-hooks/recommended",
         "airbnb-typescript/base",
         "plugin:react/jsx-runtime",
-        "plugin:import/recommended"
+        "plugin:import/recommended",
+        "plugin:import/errors",
+        "plugin:react-hooks/recommended",
+        "airbnb-typescript",
+        "prettier",
+        "plugin:jsx-a11y/recommended"
     ],
     "settings": {
         "import/resolver": {
@@ -30,10 +35,13 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "import",
+        "jsx-a11y"
     ],
     "rules": {
         "react/prop-types": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "react/react-in-jsx-scope": "off"
     }
 }

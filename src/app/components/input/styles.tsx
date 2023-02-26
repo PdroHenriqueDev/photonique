@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { InputProps } from '../../models/components/input.model';
 
 
@@ -16,9 +16,20 @@ export const Input = styled.input<InputProps>`
     transition: border-color 0.2s ease-in;
     appearance: none;
 
+    &::placeholder {
+        color: ${(({ theme }) => theme.colors.primary.main)};
+    }
+
     &:focus {
         border-color: ${({ theme }) => theme.colors.primary.main};
     }
+
+    ${({ theme, error }) =>
+    error &&
+    css`
+        color: ${theme.colors.danger.main};
+        border-color: ${theme.colors.danger.main} !important;
+    `}
 
     /* &[disabled] {
         background-color: ${({ theme }) => theme.colors.primary.main};
@@ -27,15 +38,18 @@ export const Input = styled.input<InputProps>`
 `;
 
 export const InputPasswordContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     width: 100%;
+    position: relative;
+    display: inline-block;
 
-    svg {
-        margin-left: -30px;
-        color: ${({ theme }) => theme.colors.primary.main};
+    span {
         cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        transform: translateY(-50%);
+        z-index: 1;
+        color: ${({ theme }) => theme.colors.primary.main};
     }
 `;
 

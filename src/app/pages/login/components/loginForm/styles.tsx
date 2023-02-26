@@ -5,37 +5,29 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
 
     button {
-        margin-top: 30px;
+        margin-top: 16px;
         width: 100%;
     }
+`;
+
+export const FormRow = styled.div`
+  margin-top: 16px;
+  width: 100%;
 `;
 
 export const TextLogin = styled.span`
     font-size: 36px;
     font-weight: 600;
     color: ${(({ theme }) => theme.colors.primary.lighter)};;
-    margin-bottom: 8px;
 `;
 
 export const TextWelcome = styled.span`
     font-size: 14px;
-    color: ${(({ theme }) => theme.colors.primary.lighter)};;
-    margin-bottom: 16px;
-`;
-
-export const InputContainer = styled.div`
-    width: 100%;
-    & + & {
-        margin-top: 16px;
-    }
-`;
-
-export const Label = styled.span`
-    font-size: 14px;
-    color: ${(({ theme }) => theme.colors.primary.lighter)};;
-    margin-bottom: 16px;
+    color: ${(({ theme }) => theme.colors.primary.lighter)};
 `;
 
 export const TextRegister = styled.span`
@@ -45,5 +37,6 @@ export const TextRegister = styled.span`
 
     strong {
         text-decoration: underline;
+        cursor: pointer;
     }
 `;

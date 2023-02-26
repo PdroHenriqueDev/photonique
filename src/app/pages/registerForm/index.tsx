@@ -2,11 +2,13 @@ import { useState } from 'react';
 import Button from '@dynamicComponents/button';
 import Input from '@dynamicComponents/input';
 import DynamicSelect from '@dynamicComponents/select';
-import { Container, ContentContainer, FormGroup, FormGroupContainer, InputContainer, Label, TextLogin, TextWelcome } from './styles';
+import { Container, ContentContainer, FormGroup, TextLogin, TextWelcome, FormRow } from './styles';
 import { gender } from '../../utils/variables/gender';
 import { states } from '../../utils/variables/states-cities/states';
 import { citiesByState } from '../../utils/variables/states-cities/cities';
 import { cpfMask } from '../../utils/masks/cpf';
+import { phoneMask } from '../../utils/masks/phone';
+import { formatCEP } from '../../utils/masks/cep';
 
 
 function Form() {
@@ -19,10 +21,24 @@ function Form() {
 
   const [cpf, setCpf] = useState('');
 
-  const handleMask = (event: any) => {
+  const handleCpfMask = (event: any) => {
     const maskedCpf = cpfMask(event.target.value);
 
     setCpf(maskedCpf);
+  };
+
+  const [phone, setPhone] = useState('');
+
+  const handleNumberMask = (event: any) => {
+    const maskedNumber = phoneMask(event.target.value);
+    setPhone(maskedNumber);
+  };
+
+  const [cep, setCep] = useState('');
+
+  const handleCepMask = (event: any) => {
+    const maskedCep = formatCEP(event.target.value);
+    setCep(maskedCep);
   };
 
   return (
@@ -31,62 +47,57 @@ function Form() {
             <TextLogin>Cadastre-se</TextLogin>
             <TextWelcome>Junte-se a nós</TextWelcome>
 
-            <InputContainer>
-                <Label>Nome:</Label>
-                < Input/>
-            </InputContainer>
+            <FormRow>
+                <Input  placeholder='Nome'/>
+            </FormRow>
 
-            <InputContainer>
-                <Label>CPF:</Label>
-                < Input value={cpf}  onChange={handleMask} maxLength='14'/>
-            </InputContainer>
-            <InputContainer>
-                <Label>Gênero:</Label>
-                < DynamicSelect options={gender}/>
-            </InputContainer>
+            <FormRow>
+                <Input placeholder='CPF' value={cpf}  onChange={handleCpfMask} maxLength='14'/>
+            </FormRow>
 
-            <InputContainer>
-                <Label>Telefone/Celular:</Label>
-                < Input/>
-            </InputContainer>
+            <FormRow>
+                <DynamicSelect emptyMessa={'Selecione seu Gênero'} options={gender}/>
+            </FormRow>
 
-            <InputContainer>
-                <Label>Cep:</Label>
-                < Input/>
-            </InputContainer>
+            <FormRow>
+                <Input placeholder='Telefone/Celular' value={phone}  onChange={handleNumberMask} />
+            </FormRow>
 
-            <InputContainer>
-                <Label>Estado:</Label>
-                < DynamicSelect options={states} onChange={(e) => handleStateChange(e)}/>
-            </InputContainer>
+            <FormRow>
+                <Input placeholder='Cep' value={cep}  onChange={handleCepMask}/>
+            </FormRow>
 
-            <InputContainer>
-                <Label>Cidade:</Label>
-                < DynamicSelect options={cities}/>
-            </InputContainer>
+            <FormRow>
+                <DynamicSelect emptyMessa={'Selecione seu Estado'} options={states} onChange={(e) => handleStateChange(e)}/>
+            </FormRow>
 
-            <InputContainer>
-                <Label>Logradouro:</Label>
-                < Input/>
-            </InputContainer>
+            <FormRow>
+                <DynamicSelect emptyMessa={'Selecione sua Cidade'} options={cities}/>
+            </FormRow>
 
-            <FormGroup>
-                <FormGroupContainer>
-                    <Label>Bairro:</Label>
-                    < Input/>
-                </FormGroupContainer>
-                <FormGroupContainer>
-                    <Label>Número:</Label>
-                    < Input />
-                </FormGroupContainer>
-            </FormGroup>
+            <FormRow>
+                <Input placeholder='Logradouro'/>
+            </FormRow>
 
-            <InputContainer>
-                <Label>Complemento:</Label>
-                < Input/>
-            </InputContainer>
+            <FormRow>
+                <FormGroup>
+                    <Input placeholder='Bairro' />
+                    <Input placeholder='Número' />
+                </FormGroup>
+            </FormRow>
 
-            < Button label='Cadastrar' />
+            <FormRow>
+                <Input placeholder='Complemento'/>
+            </FormRow>
+
+            <FormRow>
+                <Input type="password" />
+            </FormRow>
+            <FormRow>
+                <Input type="password" />
+            </FormRow>
+
+            <Button label='Cadastrar' />
         </ContentContainer>
     </Container>
   );
