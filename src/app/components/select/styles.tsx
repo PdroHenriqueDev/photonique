@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
     position: relative;
@@ -16,7 +16,7 @@ export const Container = styled.div`
     }
 `;
 
-export const Select = styled.select`
+export const Select = styled.select<any>`
     width: 100%;
     border: none;
     background: ${(({ theme }) => theme.colors.primary.lighter)};
@@ -35,6 +35,12 @@ export const Select = styled.select`
     &:focus {
         border-color: ${({ theme }) => theme.colors.primary.main};
     }
+
+    ${({ theme, error }) =>
+    error &&
+    css`
+        border-color: ${theme.colors.danger.main} !important;
+    `}
 
     &[disabled] {
         background-color: ${({ theme }) => theme.colors.primary.light};

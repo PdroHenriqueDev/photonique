@@ -4,8 +4,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InputProps } from '../../models/components/input.model';
 import { useState } from 'react';
 
-function Form(props: InputProps) {
-  const { type, onChange, value, placeholder, error, onKeyDown } = props;
+function Form({ type, onChange, value, placeholder, error, onKeyDown }: InputProps) {
   const defaultInput = type ? (type !== 'password') : true;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);

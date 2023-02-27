@@ -2,11 +2,10 @@ import { SelectProps } from 'app/models/components/select.model';
 import { Container, Select } from './styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default function DynamicSelect(props : SelectProps) {
-  const { options, onChange, emptyMessa, disabled } = props;
+export default function DynamicSelect({ options, onChange, emptyMessa, disabled, error } : SelectProps) {
   return (
     <Container>
-        <Select onChange={onChange} disabled={disabled}>
+        <Select onChange={onChange} disabled={disabled} error={error}>
             <option value="">{emptyMessa}</option>
             <>
                 {
