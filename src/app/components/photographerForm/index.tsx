@@ -19,10 +19,10 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
   const [cpf, setCpf] = useState('');
   const [gender, setGenter] = useState('');
   const [phone, setPhone] = useState('');
-  const [cep, setCep] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [state, setState] = useState('');
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState('');
+  const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [number, setNumber] = useState('');
@@ -86,7 +86,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
 
   const handleCepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const maskedCep = formatCEP(event.target.value);
-    setCep(maskedCep);
+    setZipCode(maskedCep);
 
     if (!event.target.value) {
         setError({ field: 'cep', message: 'Cep inválido' })
@@ -109,7 +109,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
   };
 
   const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedCity(event.target.value);
+    setCity(event.target.value);
 
     if (!event.target.value) {
         setError({ field: 'city', message: 'Selecione uma cidade' })
@@ -181,12 +181,19 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
 
         await onSubmit({
             name,
-            // email,
-            // phone: phone.replace(/\D/g, ""),
-            // categoryId,
+            email,
+            gender,
+            phone: phone.replace(/\D/g, ""),
+            zipCode,
+            state,
+            city,
+            address,
+            neighborhood,
+            number,
+            complement,
+            password,
+            confirmPassword,
         });
-
-        // setIsSubmitting(false);
     };
 
   return (
@@ -247,7 +254,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                 <FormRow>
                     <Input
                         placeholder='Cep'
-                        value={cep}
+                        value={zipCode}
                         onChange={handleCepChange}
                         error={!!getErrorMessageByFieldName('cep')}
                     />
@@ -269,7 +276,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                     <DynamicSelect
                         emptyMessa={state === '' ? 'Selecione primeiro o estado' : 'Selecione sua Cidade'}
                         options={cities} disabled={state === ''}
-                        value={selectedCity}
+                        value={city}
                         onChange={(e) => handleCityChange(e)}
                         error={!!getErrorMessageByFieldName('city')}
                     />
