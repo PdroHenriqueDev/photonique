@@ -1,135 +1,135 @@
 [{
 	"id": "1",
-	"abbreviation": "AC",
+	"value": "AC",
 	"name": "Acre"
 },
      {
 	"id": "2",
-	"abbreviation": "AL",
+	"value": "AL",
 	"name": "Alagoas"
 },
      {
 	"id": "3",
-	"abbreviation": "AM",
+	"value": "AM",
 	"name": "Amazonas"
 },
      {
 	"id": "4",
-	"abbreviation": "AP",
+	"value": "AP",
 	"name": "Amapá"
 },
      {
 	"id": "5",
-	"abbreviation": "BA",
+	"value": "BA",
 	"name": "Bahia"
 },
      {
 	"id": "6",
-	"abbreviation": "CE",
+	"value": "CE",
 	"name": "Ceará"
 },
      {
 	"id": "7",
-	"abbreviation": "DF",
+	"value": "DF",
 	"name": "Distrito Federal"
 },
      {
 	"id": "8",
-	"abbreviation": "ES",
+	"value": "ES",
 	"name": "Espírito Santo"
 },
      {
 	"id": "9",
-	"abbreviation": "GO",
+	"value": "GO",
 	"name": "Goiás"
 },
      {
 	"id": "10",
-	"abbreviation": "MA",
+	"value": "MA",
 	"name": "Maranhão"
 },
      {
 	"id": "11",
-	"abbreviation": "MG",
+	"value": "MG",
 	"name": "Minas Gerais"
 },
      {
 	"id": "12",
-	"abbreviation": "MS",
+	"value": "MS",
 	"name": "Mato Grosso do Sul"
 },
      {
 	"id": "13",
-	"abbreviation": "MT",
+	"value": "MT",
 	"name": "Mato Grosso"
 },
      {
 	"id": "14",
-	"abbreviation": "PA",
+	"value": "PA",
 	"name": "Pará"
 },
      {
 	"id": "15",
-	"abbreviation": "PB",
+	"value": "PB",
 	"name": "Paraíba"
 },
      {
 	"id": "16",
-	"abbreviation": "PE",
+	"value": "PE",
 	"name": "Pernambuco"
 },
      {
 	"id": "17",
-	"abbreviation": "PI",
+	"value": "PI",
 	"name": "Piauí"
 },
      {
 	"id": "18",
-	"abbreviation": "PR",
+	"value": "PR",
 	"name": "Paraná"
 },
      {
 	"id": "19",
-	"abbreviation": "RJ",
+	"value": "RJ",
 	"name": "Rio de Janeiro"
 },
      {
 	"id": "20",
-	"abbreviation": "RN",
+	"value": "RN",
 	"name": "Rio Grande do Norte"
 },
      {
 	"id": "21",
-	"abbreviation": "RO",
+	"value": "RO",
 	"name": "Rondônia"
 },
      {
 	"id": "22",
-	"abbreviation": "RR",
+	"value": "RR",
 	"name": "Roraima"
 },
      {
 	"id": "23",
-	"abbreviation": "RS",
+	"value": "RS",
 	"name": "Rio Grande do Sul"
 },
      {
 	"id": "24",
-	"abbreviation": "SC",
+	"value": "SC",
 	"name": "Santa Catarina"
 },
      {
 	"id": "25",
-	"abbreviation": "SE",
+	"value": "SE",
 	"name": "Sergipe"
 },
      {
 	"id": "26",
-	"abbreviation": "SP",
+	"value": "SP",
 	"name": "São Paulo"
 },
      {
 	"id": "27",
-	"abbreviation": "TO",
+	"value": "TO",
 	"name": "Tocantins"
 }]

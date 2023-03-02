@@ -8,7 +8,6 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     overflow-x: hidden;
-    padding: 32px;
 `;
 
 export const ContentContainer = styled.div`

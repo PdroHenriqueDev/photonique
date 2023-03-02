@@ -10,24 +10,41 @@ import { cpfMask } from '../../utils/masks/cpf';
 import { phoneMask } from '../../utils/masks/phone';
 import { formatCEP } from '../../utils/masks/cep';
 import { UseError } from '../../hooks/useError';
-import {  isCpf, isPhoneNumber, isPasswordStrong } from '../../utils/validators';
+import {  isCpf, isPhoneNumber, isPasswordStrong, isEmail } from '../../utils/validators';
+import { PhotographerFormProps } from 'app/models/components/photographerForm.mode';
 
-function RegisterForm() {
+function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
   const [name, setName ] = useState('');
+  const [email, setEmail ] = useState('');
   const [cpf, setCpf] = useState('');
   const [gender, setGenter] = useState('');
   const [phone, setPhone] = useState('');
-  const [cep, setCep] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [state, setState] = useState('');
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState('');
+  const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [number, setNumber] = useState('');
   const [complement, setComplement] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { setError, removeError, getErrorMessageByFieldName } = UseError();
+  const { setError, removeError, getErrorMessageByFieldName, errors } = UseError();
+
+  const isFormValid = name !== '' &&
+    email !== '' &&
+    cpf !== '' &&
+    gender !== '' &&
+    phone !== '' &&
+    zipCode !== '' &&
+    state !== '' &&
+    city !== '' &&
+    address !== '' &&
+    neighborhood !== '' &&
+    number !== '' &&
+    password !== '' &&
+    confirmPassword !== '' &&
+    errors.length === 0;
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
@@ -38,6 +55,16 @@ function RegisterForm() {
         removeError('name')
     }
   }
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+
+  if (event.target.value && !isEmail(event.target.value)) {
+      setError({ field: 'email', message: 'E-email inválido' });
+  } else {
+      removeError('email');
+  }
+}
 
   const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const maskedCpf = cpfMask(event.target.value);
@@ -74,7 +101,7 @@ function RegisterForm() {
 
   const handleCepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const maskedCep = formatCEP(event.target.value);
-    setCep(maskedCep);
+    setZipCode(maskedCep);
 
     if (!event.target.value) {
         setError({ field: 'cep', message: 'Cep inválido' })
@@ -97,7 +124,7 @@ function RegisterForm() {
   };
 
   const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedCity(event.target.value);
+    setCity(event.target.value);
 
     if (!event.target.value) {
         setError({ field: 'city', message: 'Selecione uma cidade' })
@@ -164,19 +191,59 @@ function RegisterForm() {
     }
   }
 
+  const handleSubmit = async (event: any) => {
+        event.preventDefault();
+
+        onSubmit({
+            name,
+            email,
+            cpf,
+            gender,
+            phone,
+            zipCode,
+            state,
+            city,
+            address,
+            neighborhood,
+            number,
+            complement,
+            password,
+            confirmPassword,
+        });
+    };
+
   return (
     <Container>
         <ContentContainer>
             <TextLogin>Cadastre-se</TextLogin>
             <TextWelcome>Junte-se a nós</TextWelcome>
-            <Form>
+            <Form onSubmit={handleSubmit} noValidate >
                 <FormRow>
-                    <Input value={name} placeholder='Nome' onChange={handleNameChange} error={!!getErrorMessageByFieldName('name')}/>
+                    <Input
+                        value={name} placeholder='Nome'
+                        onChange={handleNameChange}
+                        error={!!getErrorMessageByFieldName('name')}
+                    />
                     { getErrorMessageByFieldName('name') && <ErrorMessage>{getErrorMessageByFieldName('name')}</ErrorMessage> }
                 </FormRow>
 
                 <FormRow>
-                    <Input placeholder='CPF' value={cpf}  onChange={handleCpfChange} maxLength='14'/>
+                    <Input
+                        value={email} placeholder='Email'
+                        onChange={handleEmailChange}
+                        error={!!getErrorMessageByFieldName('email')}
+                    />
+                    { getErrorMessageByFieldName('email') && <ErrorMessage>{getErrorMessageByFieldName('email')}</ErrorMessage> }
+                </FormRow>
+
+                <FormRow>
+                    <Input
+                        placeholder='CPF'
+                        value={cpf}
+                        onChange={handleCpfChange}
+                        maxLength='14'
+                        error={!!getErrorMessageByFieldName('cpf')}
+                    />
                     { getErrorMessageByFieldName('cpf') && <ErrorMessage>{getErrorMessageByFieldName('cpf')}</ErrorMessage> }
                 </FormRow>
 
@@ -185,17 +252,28 @@ function RegisterForm() {
                         emptyMessa={'Selecione seu Gênero'}
                         options={genders}
                         value={gender} onChange={handleGenderChange}
+                        error={!!getErrorMessageByFieldName('gender')}
                     />
                     { getErrorMessageByFieldName('gender') && <ErrorMessage>{getErrorMessageByFieldName('gender')}</ErrorMessage> }
                 </FormRow>
 
                 <FormRow>
-                    <Input placeholder='Telefone/Celular' value={phone}  onChange={handlePhoneNumberChange} />
+                    <Input
+                        placeholder='Telefone/Celular'
+                        value={phone}
+                        onChange={handlePhoneNumberChange}
+                        error={!!getErrorMessageByFieldName('phone')}
+                    />
                     { getErrorMessageByFieldName('phone') && <ErrorMessage>{getErrorMessageByFieldName('phone')}</ErrorMessage> }
                 </FormRow>
 
                 <FormRow>
-                    <Input placeholder='Cep' value={cep}  onChange={handleCepChange}/>
+                    <Input
+                        placeholder='Cep'
+                        value={zipCode}
+                        onChange={handleCepChange}
+                        error={!!getErrorMessageByFieldName('cep')}
+                    />
                     { getErrorMessageByFieldName('cep') && <ErrorMessage>{getErrorMessageByFieldName('cep')}</ErrorMessage> }
                 </FormRow>
 
@@ -204,7 +282,9 @@ function RegisterForm() {
                         emptyMessa={'Selecione seu Estado'}
                         options={states}
                         value={state}
+                        valueType={'value'}
                         onChange={(e) => handleStateChange(e)}
+                        error={!!getErrorMessageByFieldName('state')}
                     />
                     { getErrorMessageByFieldName('state') && <ErrorMessage>{getErrorMessageByFieldName('state')}</ErrorMessage> }
                 </FormRow>
@@ -212,9 +292,12 @@ function RegisterForm() {
                 <FormRow>
                     <DynamicSelect
                         emptyMessa={state === '' ? 'Selecione primeiro o estado' : 'Selecione sua Cidade'}
-                        options={cities} disabled={state === ''}
-                        value={selectedCity}
+                        options={cities}
+                        disabled={state === ''}
+                        value={city}
+                        valueType={'name'}
                         onChange={(e) => handleCityChange(e)}
+                        error={!!getErrorMessageByFieldName('city')}
                     />
                     { getErrorMessageByFieldName('city') && <ErrorMessage>{getErrorMessageByFieldName('city')}</ErrorMessage> }
                 </FormRow>
@@ -224,6 +307,7 @@ function RegisterForm() {
                         placeholder='Logradouro'
                         value={address}
                         onChange={handleAddressChange}
+                        error={!!getErrorMessageByFieldName('address')}
                     />
                     { getErrorMessageByFieldName('address') && <ErrorMessage>{getErrorMessageByFieldName('address')}</ErrorMessage> }
                 </FormRow>
@@ -235,6 +319,7 @@ function RegisterForm() {
                             placeholder='Bairro'
                             value={neighborhood}
                             onChange={handleNeighborhoodChange}
+                            error={!!getErrorMessageByFieldName('neighborhood')}
                         />
                         { getErrorMessageByFieldName('neighborhood') && <ErrorMessage>{getErrorMessageByFieldName('neighborhood')}</ErrorMessage> }
                     </FormRow>
@@ -243,6 +328,7 @@ function RegisterForm() {
                         <Input placeholder='Número'
                             value={number}
                             onChange={handleNumberChange}
+                            error={!!getErrorMessageByFieldName('number')}
                         />
                         { getErrorMessageByFieldName('number') && <ErrorMessage>{getErrorMessageByFieldName('number')}</ErrorMessage> }
                     </FormRow>
@@ -257,15 +343,25 @@ function RegisterForm() {
                 </FormRow>
 
                 <FormRow>
-                    <Input type="password" value={password} onChange={handlePassword} />
+                    <Input
+                        type="password"
+                        value={password}
+                        onChange={handlePassword}
+                        error={!!getErrorMessageByFieldName('password')}
+                    />
                     { getErrorMessageByFieldName('password') && <ErrorMessage>{getErrorMessageByFieldName('password')}</ErrorMessage> }
                 </FormRow>
                 <FormRow>
-                    <Input type="password" value={confirmPassword} onChange={handleConfirmPassword} />
+                    <Input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={handleConfirmPassword}
+                        error={!!getErrorMessageByFieldName('confirmPassword')}
+                    />
                     { getErrorMessageByFieldName('confirmPassword') && <ErrorMessage>{getErrorMessageByFieldName('confirmPassword')}</ErrorMessage> }
                 </FormRow>
 
-                <Button label='Cadastrar' />
+                <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} />
             </Form>
         </ContentContainer>
     </Container>

@@ -1,5 +1,5 @@
 export interface StatePros {
   id: string,
-  abbreviation: string,
+  value: string,
   name: string
 }
