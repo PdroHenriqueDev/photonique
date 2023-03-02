@@ -7,7 +7,6 @@ function Form() {
 
   const navigate = useNavigate();
   const registerRoute = () => {
-    console.log('got here');
     navigate('/cadastrar');
   };
 

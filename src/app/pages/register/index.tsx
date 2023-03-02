@@ -5,8 +5,9 @@ import PhotographerService from '../../services/PhotographerService';
 function Register() {
 
  async function handleSubmit(formData: any) {
-    console.log(formData);
-    console.log(PhotographerService.createPhotographer(formData));
+    await PhotographerService.createPhotographer(formData).then((res) => {
+        console.log('got here in PhotographerService res', res)
+    });
  }
 
   return (
