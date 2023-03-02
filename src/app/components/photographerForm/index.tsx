@@ -361,7 +361,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                     { getErrorMessageByFieldName('confirmPassword') && <ErrorMessage>{getErrorMessageByFieldName('confirmPassword')}</ErrorMessage> }
                 </FormRow>
 
-                <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} />
+                <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} isLoading={true}/>
             </Form>
         </ContentContainer>
     </Container>

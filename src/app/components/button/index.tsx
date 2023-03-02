@@ -1,12 +1,12 @@
-// import Spinner from '../Spinner';
 import { ButtonProps } from '../../models/components/button.model';
 import { DynamicButton } from './styles';
+import Spinner from '../spinner';
 
 export default function Button(props: ButtonProps) {
-  const { label, onClick, disabled } = props;
+  const { label, onClick, disabled, isLoading} = props;
   return (
         <DynamicButton onClick={onClick} disabled={disabled}>
-            {label}
+            {!isLoading ? label : <Spinner />}
         </DynamicButton>
   );
 }
