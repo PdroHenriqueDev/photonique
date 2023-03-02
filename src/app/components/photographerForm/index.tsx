@@ -29,7 +29,22 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
   const [complement, setComplement] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { setError, removeError, getErrorMessageByFieldName } = UseError();
+  const { setError, removeError, getErrorMessageByFieldName, errors } = UseError();
+
+  const isFormValid = name !== '' &&
+    email !== '' &&
+    cpf !== '' &&
+    gender !== '' &&
+    phone !== '' &&
+    zipCode !== '' &&
+    state !== '' &&
+    city !== '' &&
+    address !== '' &&
+    neighborhood !== '' &&
+    number !== '' &&
+    password !== '' &&
+    confirmPassword !== '' &&
+    errors.length === 0;
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
@@ -179,11 +194,12 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
   const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        await onSubmit({
+        onSubmit({
             name,
             email,
+            cpf,
             gender,
-            phone: phone.replace(/\D/g, ""),
+            phone,
             zipCode,
             state,
             city,
@@ -266,6 +282,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         emptyMessa={'Selecione seu Estado'}
                         options={states}
                         value={state}
+                        valueType={'value'}
                         onChange={(e) => handleStateChange(e)}
                         error={!!getErrorMessageByFieldName('state')}
                     />
@@ -275,8 +292,10 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                 <FormRow>
                     <DynamicSelect
                         emptyMessa={state === '' ? 'Selecione primeiro o estado' : 'Selecione sua Cidade'}
-                        options={cities} disabled={state === ''}
+                        options={cities}
+                        disabled={state === ''}
                         value={city}
+                        valueType={'name'}
                         onChange={(e) => handleCityChange(e)}
                         error={!!getErrorMessageByFieldName('city')}
                     />
@@ -342,7 +361,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                     { getErrorMessageByFieldName('confirmPassword') && <ErrorMessage>{getErrorMessageByFieldName('confirmPassword')}</ErrorMessage> }
                 </FormRow>
 
-                <Button label={buttonLabel} />
+                <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} />
             </Form>
         </ContentContainer>
     </Container>
