@@ -12,6 +12,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   onKeyDown?: ((param?: any) => void) | undefined;
   emptyMessa: string;
   value?: string;
+  valueType?: 'id' | 'value' | 'name'
   disabled?: boolean;
   error?: boolean;
 }

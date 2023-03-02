@@ -2,7 +2,7 @@ import { SelectProps } from 'app/models/components/select.model';
 import { Container, Select } from './styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default function DynamicSelect({ options, onChange, emptyMessa, disabled, error } : SelectProps) {
+export default function DynamicSelect({ options, onChange, emptyMessa, disabled, error, valueType } : SelectProps) {
   return (
     <Container>
         <Select onChange={onChange} disabled={disabled} error={error}>
@@ -10,7 +10,7 @@ export default function DynamicSelect({ options, onChange, emptyMessa, disabled,
             <>
                 {
                     options.map((option) => (
-                        <option key={option.id} value={option.id ?? option.value}>
+                        <option key={option.id} value={(valueType === 'value' || valueType === 'name') ? option['value' || 'name'] : option.id }>
                             {option.name}
                         </option>
                     ))
