@@ -4,7 +4,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InputProps } from '../../models/components/input.model';
 import { useState } from 'react';
 
-function Form({ type, onChange, value, placeholder, error, onKeyDown }: InputProps) {
+function Form({ type, onChange, value, placeholder, error, onKeyDown, disabled }: InputProps) {
   const defaultInput = type ? (type !== 'password') : true;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -19,9 +19,9 @@ function Form({ type, onChange, value, placeholder, error, onKeyDown }: InputPro
     <>
         {
             defaultInput
-              ? <Input value={value} placeholder={placeholder} error={error} onChange={onChange} onKeyDown={onKeyDown} />
+              ? <Input value={value} placeholder={placeholder} error={error} onChange={onChange} onKeyDown={onKeyDown} disabled={disabled} />
               : <InputPasswordContainer>
-                    <InputPassword value={value} type={inputType} placeholder='Senha' error={error} onChange={onChange} onKeyDown={onKeyDown} />
+                    <InputPassword value={value} type={inputType} placeholder='Senha' error={error} onChange={onChange} onKeyDown={onKeyDown} disabled={disabled} />
                     { showPassword
                       ? <span aria-hidden="true" onClick={solvePassword}><Visibility /> </span>
                       : <span aria-hidden="true" onClick={solvePassword}><VisibilityOff /></span>
