@@ -4,6 +4,7 @@ import { Container } from './styles';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './assets/styles/themes/default';
 import { GlobalStyle } from './assets/styles/global';
+import { SnackbarProvider } from './context/snackBar';
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
     <ThemeProvider theme={defaultTheme}>
         <GlobalStyle />
         <Container>
-            <Routes />
+            <SnackbarProvider>
+                <Routes />
+            </SnackbarProvider>
         </Container>
     </ThemeProvider>
     </Router>
