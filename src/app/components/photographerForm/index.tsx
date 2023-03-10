@@ -13,7 +13,7 @@ import { UseError } from '../../hooks/useError';
 import {  isCpf, isPhoneNumber, isPasswordStrong, isEmail } from '../../utils/validators';
 import { PhotographerFormProps } from 'app/models/components/photographerForm.mode';
 
-function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
+function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormProps) {
   const [name, setName ] = useState('');
   const [email, setEmail ] = useState('');
   const [cpf, setCpf] = useState('');
@@ -29,6 +29,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
   const [complement, setComplement] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const { setError, removeError, getErrorMessageByFieldName, errors } = UseError();
 
   const isFormValid = name !== '' &&
@@ -179,6 +180,11 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
         removeError('password');
     }
 
+    if (confirmPassword.length > 3 && event.target.value !==  confirmPassword) {
+        setError({ field: 'confirmPassword', message: 'As senhas precisam ser iguais' });
+    } else {
+        removeError('confirmPassword');
+    }
   }
 
   const handleConfirmPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,7 +197,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
     }
   }
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = (event: any) => {
         event.preventDefault();
 
         onSubmit({
@@ -223,6 +229,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={name} placeholder='Nome'
                         onChange={handleNameChange}
                         error={!!getErrorMessageByFieldName('name')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('name') && <ErrorMessage>{getErrorMessageByFieldName('name')}</ErrorMessage> }
                 </FormRow>
@@ -232,6 +239,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={email} placeholder='Email'
                         onChange={handleEmailChange}
                         error={!!getErrorMessageByFieldName('email')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('email') && <ErrorMessage>{getErrorMessageByFieldName('email')}</ErrorMessage> }
                 </FormRow>
@@ -243,6 +251,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         onChange={handleCpfChange}
                         maxLength='14'
                         error={!!getErrorMessageByFieldName('cpf')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('cpf') && <ErrorMessage>{getErrorMessageByFieldName('cpf')}</ErrorMessage> }
                 </FormRow>
@@ -253,6 +262,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         options={genders}
                         value={gender} onChange={handleGenderChange}
                         error={!!getErrorMessageByFieldName('gender')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('gender') && <ErrorMessage>{getErrorMessageByFieldName('gender')}</ErrorMessage> }
                 </FormRow>
@@ -263,6 +273,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={phone}
                         onChange={handlePhoneNumberChange}
                         error={!!getErrorMessageByFieldName('phone')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('phone') && <ErrorMessage>{getErrorMessageByFieldName('phone')}</ErrorMessage> }
                 </FormRow>
@@ -273,6 +284,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={zipCode}
                         onChange={handleCepChange}
                         error={!!getErrorMessageByFieldName('cep')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('cep') && <ErrorMessage>{getErrorMessageByFieldName('cep')}</ErrorMessage> }
                 </FormRow>
@@ -285,6 +297,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         valueType={'value'}
                         onChange={(e) => handleStateChange(e)}
                         error={!!getErrorMessageByFieldName('state')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('state') && <ErrorMessage>{getErrorMessageByFieldName('state')}</ErrorMessage> }
                 </FormRow>
@@ -293,7 +306,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                     <DynamicSelect
                         emptyMessa={state === '' ? 'Selecione primeiro o estado' : 'Selecione sua Cidade'}
                         options={cities}
-                        disabled={state === ''}
+                        disabled={state === '' || isSubmitting}
                         value={city}
                         valueType={'name'}
                         onChange={(e) => handleCityChange(e)}
@@ -308,6 +321,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={address}
                         onChange={handleAddressChange}
                         error={!!getErrorMessageByFieldName('address')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('address') && <ErrorMessage>{getErrorMessageByFieldName('address')}</ErrorMessage> }
                 </FormRow>
@@ -320,6 +334,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                             value={neighborhood}
                             onChange={handleNeighborhoodChange}
                             error={!!getErrorMessageByFieldName('neighborhood')}
+                            disabled={isSubmitting}
                         />
                         { getErrorMessageByFieldName('neighborhood') && <ErrorMessage>{getErrorMessageByFieldName('neighborhood')}</ErrorMessage> }
                     </FormRow>
@@ -329,6 +344,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                             value={number}
                             onChange={handleNumberChange}
                             error={!!getErrorMessageByFieldName('number')}
+                            disabled={isSubmitting}
                         />
                         { getErrorMessageByFieldName('number') && <ErrorMessage>{getErrorMessageByFieldName('number')}</ErrorMessage> }
                     </FormRow>
@@ -339,6 +355,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         placeholder='Complemento'
                         value={complement}
                         onChange={handleComplementChange}
+                        disabled={isSubmitting}
                     />
                 </FormRow>
 
@@ -348,6 +365,7 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={password}
                         onChange={handlePassword}
                         error={!!getErrorMessageByFieldName('password')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('password') && <ErrorMessage>{getErrorMessageByFieldName('password')}</ErrorMessage> }
                 </FormRow>
@@ -357,11 +375,12 @@ function RegisterForm({ buttonLabel, onSubmit }:PhotographerFormProps) {
                         value={confirmPassword}
                         onChange={handleConfirmPassword}
                         error={!!getErrorMessageByFieldName('confirmPassword')}
+                        disabled={isSubmitting}
                     />
                     { getErrorMessageByFieldName('confirmPassword') && <ErrorMessage>{getErrorMessageByFieldName('confirmPassword')}</ErrorMessage> }
                 </FormRow>
 
-                <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} />
+                <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} isLoading={isSubmitting}/>
             </Form>
         </ContentContainer>
     </Container>

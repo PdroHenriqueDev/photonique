@@ -29,10 +29,10 @@ export const Input = styled.input<InputProps>`
         border-color: ${theme.colors.danger.main} !important;
     `}
 
-    /* &[disabled] {
-        background-color: ${({ theme }) => theme.colors.primary.main};
-        border-color: ${({ theme }) => theme.colors.primary.main};
-    } */
+    &[disabled] {
+        background-color: ${({ theme }) => theme.colors.primary.light};
+        border-color: ${({ theme }) => theme.colors.primary.light};
+    }
 `;
 
 export const InputPasswordContainer = styled.div`

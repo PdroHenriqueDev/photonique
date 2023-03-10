@@ -1,20 +1,34 @@
 import { Container } from './styles';
 import PhotographerForm from '../../components/photographerForm';
 import PhotographerService from '../../services/PhotographerService';
+import { useContext, useState } from 'react';
+import { SnackbarContext } from '../../context/snackBar';
+import { PhotographerProps } from 'app/models/photographer/photographer.mode';
 
 function Register() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
- async function handleSubmit(formData: any) {
-    await PhotographerService.createPhotographer(formData).then((res) => {
-        console.log('got here in PhotographerService res', res)
-    });
- }
+    const { showSnackbar } = useContext(SnackbarContext);
 
-  return (
-    <Container>
-        <PhotographerForm buttonLabel='Cadastrar' onSubmit={handleSubmit}/>
-    </Container>
-  );
+    async function handleSubmit(formData: PhotographerProps) {
+        setIsSubmitting(true);
+        try {
+            const postRequest = await PhotographerService.createPhotographer(formData);
+            const { message } = postRequest.data;
+            showSnackbar(message, 'success');
+        } catch (error: any) {
+            const { message } = error.response.data;
+            showSnackbar(message, 'danger');
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
+    return (
+        <Container>
+            <PhotographerForm buttonLabel='Cadastrar' onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+        </Container>
+    );
 }
 
 export default Register;

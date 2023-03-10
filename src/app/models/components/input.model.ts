@@ -1,10 +1,11 @@
 export interface InputProps {
-  type?: 'text' | 'password';
-  value?: string | number;
+  class?: string;
+  error?: boolean;
   maxLength?: string;
   onChange?: (event: any) => void;
   onKeyDown?: ((param?: any) => void) | undefined;
-  error?: boolean;
   placeholder?: string;
-  class?: string;
+  type?: 'text' | 'password';
+  value?: string | number;
+  disabled?: boolean;
 }
