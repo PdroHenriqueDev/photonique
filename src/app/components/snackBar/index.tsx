@@ -7,7 +7,7 @@ export default function DynamicSnackbar({
     handleClose,
     message,
     color,
-    autoHideDuration,
+    autoHideDuration = 1200,
 }: StyledSnackbarProps)  {
 
     const messageIsArray = Array.isArray(message);
