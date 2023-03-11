@@ -7,8 +7,10 @@ export default function DynamicSnackbar({
     handleClose,
     message,
     color,
-    autoHideDuration,
+    autoHideDuration = 1200,
 }: StyledSnackbarProps)  {
+
+    const messageIsArray = Array.isArray(message);
 
     return (
         <StyledSnackbar
@@ -18,7 +20,18 @@ export default function DynamicSnackbar({
             message={message}
             key={Date.now()}
             color={color}
-            autoHideDuration={autoHideDuration}
-        />
+            autoHideDuration={messageIsArray ? 2000 : autoHideDuration}
+        >
+            <div className="custom-snack-bar">
+                {messageIsArray ? (
+                    message.map((msg) => (
+                        <span key={msg}>
+                            {msg}
+                        </span>
+                    ))
+                ) : <span>{message}</span>
+                }
+            </div>
+        </StyledSnackbar>
       );
 }
