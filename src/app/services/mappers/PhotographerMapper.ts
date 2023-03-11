@@ -19,8 +19,8 @@ class PhotographerMapper {
             city: persistancePhotographer.city,
             address: persistancePhotographer.address,
             neighborhood: persistancePhotographer.neighborhood,
-            number: persistancePhotographer.number,
-            complement: persistancePhotographer.complement,
+            address_number: persistancePhotographer.number,
+            address_complement: persistancePhotographer.complement,
             password: persistancePhotographer.password,
             confirmPassword: persistancePhotographer.confirmPassword,
         }
