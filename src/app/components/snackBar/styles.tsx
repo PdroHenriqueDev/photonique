@@ -16,6 +16,11 @@ export const StyledSnackbar = styled(Snackbar)<StyledSnackbarProps>`
             ? theme.colors[color].main
             :  theme.colors.primary.main)};
 
+        @media (max-width: 768px) {
+            width: 100%;
+            height: 35px;
+        }
+
         span {
             color: ${(({ theme }) => theme.colors.white)};
             font-weight: 550;
