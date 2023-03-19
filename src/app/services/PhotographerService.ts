@@ -11,6 +11,13 @@ class PhotographerService {
         const photographerMapper = PhotographerMapper.toDomain(photographer);
         return axios.post(`${this.API_HOST}/photographers/create`, photographerMapper);
     }
+
+    login(email: string, password: string) {
+        return axios.post(`${this.API_HOST}/login`, {
+            email,
+            password
+         });
+    }
 }
 
 export default new PhotographerService();

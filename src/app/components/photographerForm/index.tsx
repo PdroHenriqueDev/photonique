@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from '@dynamicComponents/button';
 import Input from '@dynamicComponents/input';
 import DynamicSelect from '@dynamicComponents/select';
@@ -198,7 +198,7 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
     }
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         onSubmit({
