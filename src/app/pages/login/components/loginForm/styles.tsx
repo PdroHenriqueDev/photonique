@@ -7,11 +7,16 @@ export const Container = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
+    padding: 30px;
 
     button {
         margin-top: 16px;
         width: 100%;
     }
+`;
+
+export const Form = styled.form`
+    width: 100%;
 `;
 
 export const FormRow = styled.div`
