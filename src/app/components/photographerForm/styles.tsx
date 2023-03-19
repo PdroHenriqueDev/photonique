@@ -63,8 +63,3 @@ export const TextRegister = styled.span`
         text-decoration: underline;
     }
 `;
-
-export const ErrorMessage = styled.span`
-    color: ${(({ theme }) => theme.colors.danger.light)};
-    font-size: 10px;
-`;

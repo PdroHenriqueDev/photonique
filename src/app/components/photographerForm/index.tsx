@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from '@dynamicComponents/button';
 import Input from '@dynamicComponents/input';
 import DynamicSelect from '@dynamicComponents/select';
-import { Form, Container, ContentContainer, FormGroup, TextLogin, TextWelcome, FormRow, ErrorMessage } from './styles';
+import { Form, Container, ContentContainer, FormGroup, TextLogin, TextWelcome, FormRow } from './styles';
 import { genders } from '../../utils/variables/gender';
 import { states } from '../../utils/variables/states-cities/states';
 import { citiesByState } from '../../utils/variables/states-cities/cities';
@@ -12,6 +12,7 @@ import { formatCEP } from '../../utils/masks/cep';
 import { UseError } from '../../hooks/useError';
 import {  isCpf, isPhoneNumber, isPasswordStrong, isEmail } from '../../utils/validators';
 import { PhotographerFormProps } from 'app/models/components/photographerForm.mode';
+import ErrorMessage from '@dynamicComponents/errorMessage';
 
 function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormProps) {
   const [name, setName ] = useState('');
@@ -197,7 +198,7 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
     }
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         onSubmit({
@@ -231,17 +232,22 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('name')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('name') && <ErrorMessage>{getErrorMessageByFieldName('name')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('name')
+                        && <ErrorMessage message={getErrorMessageByFieldName('name')} />
+                    }
                 </FormRow>
 
                 <FormRow>
                     <Input
-                        value={email} placeholder='Email'
+                        placeholder='Email'
+                        value={email}
                         onChange={handleEmailChange}
                         error={!!getErrorMessageByFieldName('email')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('email') && <ErrorMessage>{getErrorMessageByFieldName('email')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('email')
+                        && <ErrorMessage message={getErrorMessageByFieldName('email')} />
+                    }
                 </FormRow>
 
                 <FormRow>
@@ -253,7 +259,9 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('cpf')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('cpf') && <ErrorMessage>{getErrorMessageByFieldName('cpf')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('cpf')
+                        && <ErrorMessage message={getErrorMessageByFieldName('cpf')} />
+                    }
                 </FormRow>
 
                 <FormRow>
@@ -264,7 +272,9 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('gender')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('gender') && <ErrorMessage>{getErrorMessageByFieldName('gender')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('gender')
+                        && <ErrorMessage message={getErrorMessageByFieldName('gender')} />
+                    }
                 </FormRow>
 
                 <FormRow>
@@ -275,7 +285,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('phone')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('phone') && <ErrorMessage>{getErrorMessageByFieldName('phone')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('phone')
+                        && <ErrorMessage message={getErrorMessageByFieldName('phone')} /> }
                 </FormRow>
 
                 <FormRow>
@@ -286,7 +297,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('cep')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('cep') && <ErrorMessage>{getErrorMessageByFieldName('cep')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('cep')
+                        && <ErrorMessage message={getErrorMessageByFieldName('cep')} /> }
                 </FormRow>
 
                 <FormRow>
@@ -299,7 +311,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('state')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('state') && <ErrorMessage>{getErrorMessageByFieldName('state')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('state')
+                        && <ErrorMessage message={getErrorMessageByFieldName('state')} /> }
                 </FormRow>
 
                 <FormRow>
@@ -312,7 +325,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         onChange={(e) => handleCityChange(e)}
                         error={!!getErrorMessageByFieldName('city')}
                     />
-                    { getErrorMessageByFieldName('city') && <ErrorMessage>{getErrorMessageByFieldName('city')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('city')
+                        && <ErrorMessage message={getErrorMessageByFieldName('city')} /> }
                 </FormRow>
 
                 <FormRow>
@@ -323,7 +337,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('address')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('address') && <ErrorMessage>{getErrorMessageByFieldName('address')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('address')
+                        && <ErrorMessage message={getErrorMessageByFieldName('address')} /> }
                 </FormRow>
 
 
@@ -336,7 +351,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                             error={!!getErrorMessageByFieldName('neighborhood')}
                             disabled={isSubmitting}
                         />
-                        { getErrorMessageByFieldName('neighborhood') && <ErrorMessage>{getErrorMessageByFieldName('neighborhood')}</ErrorMessage> }
+                        { getErrorMessageByFieldName('neighborhood')
+                            && <ErrorMessage message={getErrorMessageByFieldName('neighborhood')} /> }
                     </FormRow>
 
                     <FormRow>
@@ -346,7 +362,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                             error={!!getErrorMessageByFieldName('number')}
                             disabled={isSubmitting}
                         />
-                        { getErrorMessageByFieldName('number') && <ErrorMessage>{getErrorMessageByFieldName('number')}</ErrorMessage> }
+                        { getErrorMessageByFieldName('number')
+                            && <ErrorMessage message={getErrorMessageByFieldName('number')} /> }
                     </FormRow>
                 </FormGroup>
 
@@ -367,7 +384,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('password')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('password') && <ErrorMessage>{getErrorMessageByFieldName('password')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('password')
+                        && <ErrorMessage message={getErrorMessageByFieldName('password')} /> }
                 </FormRow>
                 <FormRow>
                     <Input
@@ -377,7 +395,8 @@ function RegisterForm({ buttonLabel, onSubmit, isSubmitting }:PhotographerFormPr
                         error={!!getErrorMessageByFieldName('confirmPassword')}
                         disabled={isSubmitting}
                     />
-                    { getErrorMessageByFieldName('confirmPassword') && <ErrorMessage>{getErrorMessageByFieldName('confirmPassword')}</ErrorMessage> }
+                    { getErrorMessageByFieldName('confirmPassword')
+                        && <ErrorMessage message={getErrorMessageByFieldName('confirmPassword')} /> }
                 </FormRow>
 
                 <Button label={isFormValid ? buttonLabel : 'Preencha todos os campos'} disabled={!isFormValid} isLoading={isSubmitting}/>
