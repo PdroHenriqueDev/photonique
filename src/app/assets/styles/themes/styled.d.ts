@@ -1,4 +1,4 @@
-import 'styled-components';
+import 'styled-components'
 
 interface IPalette {
   lighter?: string
@@ -10,12 +10,12 @@ interface IPalette {
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
-      background: string,
-      white: string,
-      primary: IPalette,
-      danger: IPalette,
+      background: string
+      white: string
+      primary: IPalette
+      danger: IPalette
       success: {
-        main: string;
+        main: string
       }
     }
   }

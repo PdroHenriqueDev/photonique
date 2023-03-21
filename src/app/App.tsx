@@ -1,24 +1,24 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './routes';
-import { Container } from './styles';
-import { ThemeProvider } from 'styled-components';
-import { defaultTheme } from './assets/styles/themes/default';
-import { GlobalStyle } from './assets/styles/global';
-import { SnackbarProvider } from './context/snackBar';
+import { BrowserRouter as Router } from 'react-router-dom'
+import Routes from './routes'
+import { Container } from './styles'
+import { ThemeProvider } from 'styled-components'
+import { defaultTheme } from './assets/styles/themes/default'
+import { GlobalStyle } from './assets/styles/global'
+import { SnackbarProvider } from './context/snackBar'
 
 function App() {
   return (
     <Router>
-    <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={defaultTheme}>
         <GlobalStyle />
         <Container>
-            <SnackbarProvider>
-                <Routes />
-            </SnackbarProvider>
+          <SnackbarProvider>
+            <Routes />
+          </SnackbarProvider>
         </Container>
-    </ThemeProvider>
+      </ThemeProvider>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

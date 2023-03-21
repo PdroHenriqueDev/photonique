@@ -1,12 +1,12 @@
-import Routes from './routes';
-import { Container } from './styles';
+import Routes from './routes'
+import { Container } from './styles'
 
 function Register() {
   return (
     <Container>
-        <Routes />
+      <Routes />
     </Container>
-  );
+  )
 }
 
-export default Register;
+export default Register
