@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
-import Button from '@dynamicComponents/button'
-import Input from '@dynamicComponents/input'
-import DynamicSelect from '@dynamicComponents/select'
+import Button from '@components/button'
+import Input from '@components/input'
+import DynamicSelect from '@components/select'
 import {
   Form,
   Container,
@@ -25,7 +25,7 @@ import {
   isEmail,
 } from '../../utils/validators'
 import { PhotographerFormProps } from 'app/models/components/photographerForm.mode'
-import ErrorMessage from '@dynamicComponents/errorMessage'
+import ErrorMessage from '@components/errorMessage'
 
 function RegisterForm({
   buttonLabel,

@@ -12,7 +12,7 @@ import {
   FormRow,
   Form,
 } from './styles'
-import ErrorMessage from '@dynamicComponents/errorMessage'
+import ErrorMessage from '@components/errorMessage'
 import { SnackbarContext } from '../../../../context/snackBar'
 import PhotographerService from '../../../../services/PhotographerService'
 

@@ -5,7 +5,7 @@ import PhotographerMapper from './mappers/PhotographerMapper'
 import { PhotographerServiceProps } from 'app/models/services/photographerService.model'
 
 class PhotographerService {
-  API_HOST = process.env.REACT_APP_API_HOST!
+  API_HOST = import.meta.env.REACT_APP_API_HOST;
 
   createPhotographer(
     photographer: PhotographerProps
