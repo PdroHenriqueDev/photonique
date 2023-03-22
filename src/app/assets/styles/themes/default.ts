@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/named
-import { DefaultTheme }  from 'styled-components';
-
+import { DefaultTheme } from 'styled-components'
 
 export const defaultTheme: DefaultTheme = {
   colors: {
@@ -21,7 +20,7 @@ export const defaultTheme: DefaultTheme = {
       main: '#51CA73',
     },
   },
-};
+}
 
 // export default {
 //   colors: {
@@ -61,5 +60,3 @@ export const defaultTheme: DefaultTheme = {
 // .Inktober-2019-3-hex { color: #F2EFEB; }
 // .Inktober-2019-4-hex { color: #595959; }
 // .Inktober-2019-5-hex { color: #0D0D0D; }
-
-

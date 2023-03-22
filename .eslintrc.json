@@ -16,7 +16,10 @@
         "plugin:react-hooks/recommended",
         "airbnb-typescript",
         "prettier",
-        "plugin:jsx-a11y/recommended"
+        "plugin:prettier/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint"
     ],
     "settings": {
         "import/resolver": {
@@ -37,11 +40,14 @@
     "plugins": [
         "react",
         "import",
-        "jsx-a11y"
+        "jsx-a11y",
+        "prettier",
+        "@typescript-eslint"
     ],
     "rules": {
         "react/prop-types": "off",
         "import/no-unresolved": "off",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "prettier/prettier": "error"
     }
 }
