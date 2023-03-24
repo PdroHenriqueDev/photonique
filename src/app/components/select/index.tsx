@@ -8,11 +8,17 @@ export default function DynamicSelect({
   emptyMessa,
   disabled,
   error,
+  value,
   valueType,
 }: SelectProps) {
   return (
     <Container>
-      <Select onChange={onChange} disabled={disabled} error={error}>
+      <Select
+        onChange={onChange}
+        disabled={disabled}
+        error={error}
+        value={value}
+      >
         <option value="">{emptyMessa}</option>
         <>
           {options.map((option) => (
