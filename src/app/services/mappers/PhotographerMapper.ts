@@ -1,4 +1,4 @@
-import { PhotographerProps } from 'app/models/photographer/photographer.mode'
+import { PhotographerProps } from 'app/models/photographer/photographer.mode';
 
 class PhotographerMapper {
   // toPersistance(domainPhotographer) {
@@ -23,8 +23,8 @@ class PhotographerMapper {
       address_complement: persistancePhotographer.complement,
       password: persistancePhotographer.password,
       confirmPassword: persistancePhotographer.confirmPassword,
-    }
+    };
   }
 }
 
-export default new PhotographerMapper()
+export default new PhotographerMapper();

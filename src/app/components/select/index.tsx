@@ -1,6 +1,6 @@
-import { SelectProps } from 'app/models/components/select.model'
-import { Container, Select } from './styles'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { SelectProps } from 'app/models/components/select.model';
+import { Container, Select } from './styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function DynamicSelect({
   options,
@@ -33,5 +33,5 @@ export default function DynamicSelect({
         <ExpandMoreIcon />
       </span>
     </Container>
-  )
+  );
 }

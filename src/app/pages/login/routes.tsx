@@ -1,9 +1,9 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import IdentifyComponent from './components/identify'
-import { Container, ContentContainer } from './styles'
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import IdentifyComponent from './components/identify';
+import { Container, ContentContainer } from './styles';
 
-const LoginForm = lazy(() => import('./components/loginForm'))
+const LoginForm = lazy(() => import('./components/loginForm'));
 
 export default function LoginRoutes() {
   return (
@@ -23,5 +23,5 @@ export default function LoginRoutes() {
         </Routes>
       </ContentContainer>
     </Container>
-  )
+  );
 }

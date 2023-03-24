@@ -1,5 +1,5 @@
-import { SpinnerProps } from 'app/models/components/spinner.model'
-import styled, { keyframes } from 'styled-components'
+import { SpinnerProps } from 'app/models/components/spinner.model';
+import styled, { keyframes } from 'styled-components';
 
 const load = keyframes`
   0% {
@@ -22,7 +22,7 @@ const load = keyframes`
   100% {
     box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
   }
-`
+`;
 
 const round = keyframes`
   0% {
@@ -33,7 +33,7 @@ const round = keyframes`
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-`
+`;
 
 export const StyledSpinner = styled.div<SpinnerProps>`
   color: ${({ theme }) => theme.colors.primary.main};
@@ -46,4 +46,4 @@ export const StyledSpinner = styled.div<SpinnerProps>`
   transform: translateZ(0);
   -webkit-animation: ${load} 1.7s infinite ease, ${round} 1.7s infinite ease;
   animation: ${load} 1.7s infinite ease, ${round} 1.7s infinite ease;
-`
+`;

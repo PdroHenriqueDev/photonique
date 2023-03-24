@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const DynamicButton = styled.button`
   height: 52px;
@@ -29,4 +29,4 @@ export const DynamicButton = styled.button`
     color: ${({ theme }) => theme.colors.primary.lighter};
     cursor: default !important;
   }
-`
+`;

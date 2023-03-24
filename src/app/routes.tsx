@@ -1,8 +1,8 @@
-import { Routes, Route } from 'react-router-dom'
-import LoginComponent from './pages/login'
-import { lazy, Suspense } from 'react'
+import { Routes, Route } from 'react-router-dom';
+import LoginComponent from './pages/login';
+import { lazy, Suspense } from 'react';
 
-const RegisterForm = lazy(() => import('./pages/register'))
+const RegisterForm = lazy(() => import('./pages/register'));
 
 export default function AppRoutes() {
   return (
@@ -17,5 +17,5 @@ export default function AppRoutes() {
         }
       />
     </Routes>
-  )
+  );
 }

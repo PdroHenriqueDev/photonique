@@ -1,31 +1,31 @@
 import {
   SnackbarContextValue,
   StyledSnackbarProps,
-} from 'app/models/components/snackBar.model'
-import { createContext, useState } from 'react'
-import DynamicSnackbar from '../components/snackBar'
+} from 'app/models/components/snackBar.model';
+import { createContext, useState } from 'react';
+import DynamicSnackbar from '../components/snackBar';
 
 export const SnackbarContext = createContext<SnackbarContextValue>({
   showSnackbar: () => {},
-})
+});
 
 export function SnackbarProvider(props: StyledSnackbarProps) {
   const [snackbarState, setSnackbarState] = useState<StyledSnackbarProps>({
     open: false,
     message: '',
-  })
+  });
 
   const handleClose = () => {
-    setSnackbarState((prevState) => ({ ...prevState, open: false }))
-  }
+    setSnackbarState((prevState) => ({ ...prevState, open: false }));
+  };
 
   const showSnackbar = (
     message: string | string[],
     color?: 'success' | 'danger',
-    autoHideDuration?: number
+    autoHideDuration?: number,
   ) => {
-    setSnackbarState({ open: true, message, color, autoHideDuration })
-  }
+    setSnackbarState({ open: true, message, color, autoHideDuration });
+  };
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar }}>
@@ -38,5 +38,5 @@ export function SnackbarProvider(props: StyledSnackbarProps) {
         autoHideDuration={snackbarState.autoHideDuration}
       />
     </SnackbarContext.Provider>
-  )
+  );
 }

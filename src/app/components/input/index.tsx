@@ -1,8 +1,8 @@
-import { Input, InputPassword, InputPasswordContainer } from './styles'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { InputProps } from '../../models/components/input.model'
-import { useState } from 'react'
+import { Input, InputPassword, InputPasswordContainer } from './styles';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { InputProps } from '../../models/components/input.model';
+import { useState } from 'react';
 
 function Form({
   type,
@@ -13,15 +13,15 @@ function Form({
   onKeyDown,
   disabled,
 }: InputProps) {
-  const defaultInput = type ? type !== 'password' : true
+  const defaultInput = type ? type !== 'password' : true;
 
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [inputType, setInputType] = useState<any>('password')
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [inputType, setInputType] = useState<any>('password');
 
   const solvePassword = () => {
-    setShowPassword(showPassword ? false : true)
-    setInputType(inputType === 'password' ? 'text' : 'password')
-  }
+    setShowPassword(showPassword ? false : true);
+    setInputType(inputType === 'password' ? 'text' : 'password');
+  };
 
   return (
     <>
@@ -57,7 +57,7 @@ function Form({
         </InputPasswordContainer>
       )}
     </>
-  )
+  );
 }
 
-export default Form
+export default Form;

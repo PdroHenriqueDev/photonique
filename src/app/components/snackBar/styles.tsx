@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { Snackbar } from '@mui/material'
-import { StyledSnackbarProps } from 'app/models/components/snackBar.model'
+import styled from 'styled-components';
+import { Snackbar } from '@mui/material';
+import { StyledSnackbarProps } from 'app/models/components/snackBar.model';
 
 export const StyledSnackbar = styled(Snackbar)<StyledSnackbarProps>`
   .custom-snack-bar {
@@ -29,4 +29,4 @@ export const StyledSnackbar = styled(Snackbar)<StyledSnackbarProps>`
       }
     }
   }
-`
+`;
