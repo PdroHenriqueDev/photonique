@@ -26,6 +26,9 @@ import {
 } from '../../utils/validators';
 import { PhotographerFormProps } from 'app/models/components/photographerForm.mode';
 import ErrorMessage from '@components/errorMessage';
+import CepService from 'app/services/CepService';
+import { isCepValid } from 'app/utils/validators/isCep';
+import { CityProps } from 'app/models/variables/city.model';
 
 function RegisterForm({
   buttonLabel,
@@ -39,7 +42,7 @@ function RegisterForm({
   const [phone, setPhone] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [state, setState] = useState('');
-  const [cities, setCities] = useState([]);
+  const [cities, setCities] = useState<CityProps[]>([]);
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
@@ -121,24 +124,48 @@ function RegisterForm({
     }
   };
 
-  const handleCepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const maskedCep = formatCEP(event.target.value);
+  const setCepInfo = async (cep: string) => {
+    if (isCepValid(cep)) {
+      const cepInfo = await CepService.getCepInfo(cep);
+
+      const { state, city, address, neighborhood, complement } = cepInfo;
+      if (state) handleStateChange(state);
+      if (city) setCity(city);
+      if (address) setAddress(address);
+      if (neighborhood) setNeighborhood(neighborhood);
+      if (complement) setComplement(complement);
+    }
+  };
+
+  const handleCepChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = event.target.value;
+
+    const maskedCep = formatCEP(value);
     setZipCode(maskedCep);
 
-    if (!event.target.value) {
+    if (!value || !isCepValid(value)) {
       setError({ field: 'cep', message: 'Cep inválido' });
     } else {
       removeError('cep');
     }
+
+    setCepInfo(value);
   };
 
-  const handleStateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const citiesFiltered: any = citiesByState(event.target.value);
+  const handleStateChange = (
+    event: React.ChangeEvent<HTMLInputElement> | string,
+  ) => {
+    const value =
+      typeof event === 'string' || !event ? event : event.target.value;
+
+    const citiesFiltered = citiesByState(value);
     setCities(citiesFiltered);
 
-    setState(event.target.value);
+    setState(value);
 
-    if (!event.target.value) {
+    if (!value) {
       setError({ field: 'state', message: 'Selecione um Estado' });
     } else {
       removeError('state');
