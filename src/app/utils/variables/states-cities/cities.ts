@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CityProps } from 'app/models/variables/city.model';
 import statesJson from './states.json';
 import citiesJson from './cities.json';
@@ -11,7 +12,7 @@ export const citiesByState = (stateValue: string) => {
   const findState = statesJson.find(
     (state: StatePros) => state.value === stateValue,
   );
-  const { id } = findState!;
+  const id = findState?.id ?? 1;
 
   const filteredCities = allCities.filter(
     (city: CityProps) => city.state === id,
