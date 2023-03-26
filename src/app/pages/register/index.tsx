@@ -4,8 +4,10 @@ import PhotographerService from '../../services/PhotographerService';
 import { useContext, useState } from 'react';
 import { SnackbarContext } from '../../context/snackBar';
 import { PhotographerProps } from 'app/models/photographer/photographer.mode';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { showSnackbar } = useContext(SnackbarContext);
@@ -18,6 +20,7 @@ function Register() {
       );
       const { message } = postRequest.data;
       showSnackbar(message, 'success');
+      navigate('/login');
     } catch (error: any) {
       const { message } = error.response.data;
       showSnackbar(message, 'danger');
