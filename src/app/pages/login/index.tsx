@@ -1,7 +1,7 @@
 import Routes from './routes';
 import { Container } from './styles';
 
-function Register() {
+function Login() {
   return (
     <Container>
       <Routes />
@@ -9,4 +9,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;
