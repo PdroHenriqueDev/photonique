@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { InputProps } from '../../models/components/input.model'
+import styled, { css } from 'styled-components';
+import { InputProps } from '../../models/components/input.model';
 
 export const Input = styled.input<InputProps>`
   width: 100%;
@@ -33,7 +33,7 @@ export const Input = styled.input<InputProps>`
     background-color: ${({ theme }) => theme.colors.primary.light};
     border-color: ${({ theme }) => theme.colors.primary.light};
   }
-`
+`;
 
 export const InputPasswordContainer = styled.div`
   width: 100%;
@@ -49,7 +49,7 @@ export const InputPasswordContainer = styled.div`
     z-index: 1;
     color: ${({ theme }) => theme.colors.primary.main};
   }
-`
+`;
 
 export const InputPassword = styled.input<InputProps>`
   width: 100%;
@@ -73,4 +73,4 @@ export const InputPassword = styled.input<InputProps>`
         background-color: ${({ theme }) => theme.colors.primary.main};
         border-color: ${({ theme }) => theme.colors.primary.main};
     } */
-`
+`;

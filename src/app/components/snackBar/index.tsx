@@ -1,5 +1,5 @@
-import { StyledSnackbarProps } from 'app/models/components/snackBar.model'
-import { StyledSnackbar } from './styles'
+import { StyledSnackbarProps } from 'app/models/components/snackBar.model';
+import { StyledSnackbar } from './styles';
 
 export default function DynamicSnackbar({
   anchorOrigin = { vertical: 'top', horizontal: 'right' },
@@ -9,7 +9,7 @@ export default function DynamicSnackbar({
   color,
   autoHideDuration = 1200,
 }: StyledSnackbarProps) {
-  const messageIsArray = Array.isArray(message)
+  const messageIsArray = Array.isArray(message);
 
   return (
     <StyledSnackbar
@@ -29,5 +29,5 @@ export default function DynamicSnackbar({
         )}
       </div>
     </StyledSnackbar>
-  )
+  );
 }

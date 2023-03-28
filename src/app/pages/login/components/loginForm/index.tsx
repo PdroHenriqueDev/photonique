@@ -1,9 +1,9 @@
-import { UseError } from '../../../../hooks/useError'
-import { isEmail } from '../../../../utils/validators'
-import { FormEvent, useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Button from '../../../../components/button'
-import Input from '../../../../components/input'
+import { UseError } from '../../../../hooks/useError';
+import { isEmail } from '../../../../utils/validators';
+import { FormEvent, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../../../components/button';
+import Input from '../../../../components/input';
 import {
   Container,
   TextLogin,
@@ -11,64 +11,64 @@ import {
   TextWelcome,
   FormRow,
   Form,
-} from './styles'
-import ErrorMessage from '@components/errorMessage'
-import { SnackbarContext } from '../../../../context/snackBar'
-import PhotographerService from '../../../../services/PhotographerService'
+} from './styles';
+import ErrorMessage from '@components/errorMessage';
+import { SnackbarContext } from '../../../../context/snackBar';
+import PhotographerService from '../../../../services/PhotographerService';
 
 function LoginForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { setError, removeError, getErrorMessageByFieldName, errors } =
-    UseError()
+    UseError();
 
-  const { showSnackbar } = useContext(SnackbarContext)
+  const { showSnackbar } = useContext(SnackbarContext);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value)
+    setEmail(event.target.value);
 
     if (event.target.value && !isEmail(event.target.value)) {
-      setError({ field: 'email', message: 'E-email inválido' })
+      setError({ field: 'email', message: 'E-email inválido' });
     } else {
-      removeError('email')
+      removeError('email');
     }
-  }
+  };
 
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
+    setPassword(event.target.value);
 
     if (!event.target.value) {
-      setError({ field: 'password', message: 'Senha necessária' })
+      setError({ field: 'password', message: 'Senha necessária' });
     } else {
-      removeError('password')
+      removeError('password');
     }
-  }
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const registerRoute = () => {
-    navigate('/cadastrar')
-  }
+    navigate('/cadastrar');
+  };
 
-  const isFormValid = errors.length === 0 && email.length && password.length
+  const isFormValid = errors.length === 0 && email.length && password.length;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-      const postRequest = await PhotographerService.login(email, password)
-      const { message } = postRequest.data
-      showSnackbar(message, 'success')
+      const postRequest = await PhotographerService.login(email, password);
+      const { message } = postRequest.data;
+      showSnackbar(message, 'success');
     } catch (error: any) {
-      const { message } = error.response.data
-      showSnackbar(message, 'danger')
+      const { message } = error.response.data;
+      showSnackbar(message, 'danger');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <Container>
@@ -110,7 +110,7 @@ function LoginForm() {
         </strong>
       </TextRegister>
     </Container>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;

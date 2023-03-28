@@ -1,19 +1,16 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import IdentifyComponent from './components/identify'
-import { Container, ContentContainer } from './styles'
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Container, ContentContainer } from './styles';
 
-const LoginForm = lazy(() => import('./components/loginForm'))
+const LoginForm = lazy(() => import('./components/loginForm'));
 
 export default function LoginRoutes() {
   return (
     <Container>
       <ContentContainer>
         <Routes>
-          <Route path="/" element={<IdentifyComponent />} />
-
           <Route
-            path="/login"
+            path="/"
             element={
               <Suspense fallback={<>...</>}>
                 <LoginForm />
@@ -23,5 +20,5 @@ export default function LoginRoutes() {
         </Routes>
       </ContentContainer>
     </Container>
-  )
+  );
 }

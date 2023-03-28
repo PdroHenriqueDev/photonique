@@ -7,4 +7,4 @@ export const genders = [
     id: 2,
     name: 'Feminino',
   },
-]
+];

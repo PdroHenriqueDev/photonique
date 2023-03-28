@@ -1,37 +1,37 @@
 export const isCpf = (cpf: string): boolean => {
-  cpf = cpf.replace(/[^\d]+/g, '')
+  cpf = cpf.replace(/[^\d]+/g, '');
 
   if (cpf === '') {
-    return false
+    return false;
   }
 
   if (cpf.length !== 11) {
-    return false
+    return false;
   }
 
   if (/^(\d)\1+$/.test(cpf)) {
-    return false
+    return false;
   }
 
-  let sum = 0
+  let sum = 0;
   for (let i = 0; i < 9; i++) {
-    sum += parseInt(cpf.charAt(i)) * (10 - i)
+    sum += parseInt(cpf.charAt(i)) * (10 - i);
   }
-  let rest = sum % 11
-  let digit = rest < 2 ? 0 : 11 - rest
+  let rest = sum % 11;
+  let digit = rest < 2 ? 0 : 11 - rest;
   if (digit !== parseInt(cpf.charAt(9))) {
-    return false
+    return false;
   }
 
-  sum = 0
+  sum = 0;
   for (let i = 0; i < 10; i++) {
-    sum += parseInt(cpf.charAt(i)) * (11 - i)
+    sum += parseInt(cpf.charAt(i)) * (11 - i);
   }
-  rest = sum % 11
-  digit = rest < 2 ? 0 : 11 - rest
+  rest = sum % 11;
+  digit = rest < 2 ? 0 : 11 - rest;
   if (digit !== parseInt(cpf.charAt(10))) {
-    return false
+    return false;
   }
 
-  return true
-}
+  return true;
+};

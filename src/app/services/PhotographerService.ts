@@ -1,28 +1,28 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import axios from 'axios'
-import { PhotographerProps } from 'app/models/photographer/photographer.mode'
-import PhotographerMapper from './mappers/PhotographerMapper'
-import { PhotographerServiceProps } from 'app/models/services/photographerService.model'
+import axios from 'axios';
+import { PhotographerProps } from 'app/models/photographer/photographer.mode';
+import PhotographerMapper from './mappers/PhotographerMapper';
+import { PhotographerServiceProps } from 'app/models/service/photographerService.model';
 
 class PhotographerService {
-  API_HOST = import.meta.env.REACT_APP_API_HOST;
+  API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
 
   createPhotographer(
-    photographer: PhotographerProps
+    photographer: PhotographerProps,
   ): Promise<PhotographerServiceProps> {
-    const photographerMapper = PhotographerMapper.toDomain(photographer)
+    const photographerMapper = PhotographerMapper.toDomain(photographer);
     return axios.post(
-      `${this.API_HOST}/photographers/create`,
-      photographerMapper
-    )
+      `${this.API_PHOTONIQUE}/photographers/create`,
+      photographerMapper,
+    );
   }
 
   login(email: string, password: string) {
-    return axios.post(`${this.API_HOST}/login`, {
+    return axios.post(`${this.API_PHOTONIQUE}/login`, {
       email,
       password,
-    })
+    });
   }
 }
 
-export default new PhotographerService()
+export default new PhotographerService();
