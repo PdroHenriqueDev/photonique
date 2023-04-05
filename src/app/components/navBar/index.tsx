@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 const pages = ['Inicío'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function NavBar() {
+function NavBar({ isPhotographer = true }) {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
@@ -95,9 +95,11 @@ function NavBar() {
               ))}
             </Box>
 
-            <PhotographerPage onClick={() => navigate('/login')}>
-              Sou fotógrafo
-            </PhotographerPage>
+            {isPhotographer && (
+              <PhotographerPage onClick={() => navigate('/login')}>
+                Sou fotógrafo
+              </PhotographerPage>
+            )}
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
