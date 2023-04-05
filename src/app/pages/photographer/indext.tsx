@@ -1,7 +1,7 @@
 import Routes from './routes';
 
-function Login() {
+function Photographer() {
   return <Routes />;
 }
 
-export default Login;
+export default Photographer;
