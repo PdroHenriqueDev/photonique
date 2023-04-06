@@ -29,6 +29,7 @@
     "serve": "vite preview",
     "build": "tsc && vite build",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "eject": "vite eject",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
