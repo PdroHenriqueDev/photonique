@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import LoginComponent from './pages/login';
 import HomeComponent from './pages/home';
 import { lazy, Suspense } from 'react';
-import Photographer from './pages/photographer/indext';
+import Photographer from './pages/photographer/index';
 
 const RegisterForm = lazy(() => import('./pages/register'));
 
