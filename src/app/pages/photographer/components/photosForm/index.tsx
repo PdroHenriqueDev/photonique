@@ -7,6 +7,10 @@ import { citiesByState } from 'app/utils/variables/states-cities/cities';
 import { CityProps } from 'app/models/variables/city.model';
 import { UseError } from 'app/hooks/useError';
 import ErrorMessage from '@components/errorMessage';
+import DatePicker from '@components/datePicker';
+import { Dayjs } from 'dayjs';
+import { DateValidationError } from '@mui/x-date-pickers';
+import { PickerChangeHandler } from '@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue';
 
 function PhotosForm() {
   const [eventName, setEventName] = useState('');
@@ -14,6 +18,7 @@ function PhotosForm() {
   const [state, setState] = useState('');
   const [cities, setCities] = useState<CityProps[]>([]);
   const [city, setCity] = useState('');
+  const [date, setDate] = useState<Dayjs | null>(null);
 
   const { setError, removeError, getErrorMessageByFieldName, errors } =
     UseError();
@@ -81,6 +86,19 @@ function PhotosForm() {
     }
   };
 
+  const handleDateChange: PickerChangeHandler<
+    Dayjs | null,
+    DateValidationError
+  > = (date: Dayjs | null) => {
+    setDate(date);
+
+    if (!date) {
+      setError({ field: 'date', message: 'Selecione uma data' });
+    } else {
+      removeError('date');
+    }
+  };
+
   return (
     <Container>
       <ContentContainer>
@@ -143,6 +161,13 @@ function PhotosForm() {
             />
             {getErrorMessageByFieldName('city') && (
               <ErrorMessage message={getErrorMessageByFieldName('city')} />
+            )}
+          </FormRow>
+
+          <FormRow>
+            <DatePicker value={date} onChange={handleDateChange} />
+            {getErrorMessageByFieldName('date') && (
+              <ErrorMessage message={getErrorMessageByFieldName('date')} />
             )}
           </FormRow>
         </Form>
