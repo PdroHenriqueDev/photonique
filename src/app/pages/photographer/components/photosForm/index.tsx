@@ -3,6 +3,7 @@ import Input from '@components/input';
 import { useState } from 'react';
 import DynamicSelect from '@components/select';
 import { states } from 'app/utils/variables/states-cities/states';
+import { eventCategories } from 'app/utils/variables/eventCategory';
 import { citiesByState } from 'app/utils/variables/states-cities/cities';
 import { CityProps } from 'app/models/variables/city.model';
 import { UseError } from 'app/hooks/useError';
@@ -16,6 +17,7 @@ function PhotosForm() {
   const [eventName, setEventName] = useState('');
   const [eventLocation, setEventLocation] = useState('');
   const [state, setState] = useState('');
+  const [category, setCategory] = useState('');
   const [cities, setCities] = useState<CityProps[]>([]);
   const [city, setCity] = useState('');
   const [date, setDate] = useState<Dayjs | null>(null);
@@ -54,6 +56,20 @@ function PhotosForm() {
       });
     } else {
       removeError('eventLocation');
+    }
+  };
+
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const { value } = event.target;
+
+    setCategory(value);
+
+    if (!value) {
+      setError({ field: 'category', message: 'Selecione uma categoria' });
+    } else {
+      removeError('category');
     }
   };
 
@@ -127,6 +143,20 @@ function PhotosForm() {
               <ErrorMessage
                 message={getErrorMessageByFieldName('eventLocation')}
               />
+            )}
+          </FormRow>
+
+          <FormRow>
+            <DynamicSelect
+              emptyMessa={'Selecione a categoria do evento'}
+              options={eventCategories}
+              value={category}
+              onChange={(e) => handleCategoryChange(e)}
+              error={!!getErrorMessageByFieldName('category')}
+              //   disabled={isSubmitting}
+            />
+            {getErrorMessageByFieldName('category') && (
+              <ErrorMessage message={getErrorMessageByFieldName('category')} />
             )}
           </FormRow>
 
