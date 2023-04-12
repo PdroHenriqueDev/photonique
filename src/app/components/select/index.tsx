@@ -19,7 +19,7 @@ export default function DynamicSelect({
         error={error}
         value={value}
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           {emptyMessa}
         </option>
         <>
