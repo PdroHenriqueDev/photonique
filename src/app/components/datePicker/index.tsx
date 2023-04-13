@@ -20,6 +20,7 @@ export default function DatePickerValue({
             defaultValue={dayjs()}
             value={value}
             onChange={onChange}
+            format="DD/MM/YYYY"
           />
         </DemoContainer>
       </LocalizationProvider>
