@@ -69,37 +69,43 @@ export default function HorizontalLinearStepper() {
             );
           })}
         </Stepper>
-        {activeStep === steps.length ? (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleReset}>Reset</Button>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <ContentContainer>
-            <SetpContentContainer>
-              {activeStep === 0 && <PhotosForm />}
-            </SetpContentContainer>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Voltar
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
-              </Button>
-            </Box>
-          </ContentContainer>
-        )}
+
+        <ContentContainer>
+          {activeStep === steps.length ? (
+            <>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Box sx={{ flex: '1 1 auto' }} />
+                <Button className="step-button" onClick={handleReset}>
+                  Reset
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <>
+              <SetpContentContainer>
+                {activeStep === 0 && <PhotosForm />}
+              </SetpContentContainer>
+              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Button
+                  className="step-button"
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Voltar
+                </Button>
+                <Box sx={{ flex: '1 1 auto' }} />
+                <Button onClick={handleNext} className="step-button">
+                  {activeStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
+                </Button>
+              </Box>
+            </>
+          )}
+        </ContentContainer>
       </Box>
     </Container>
   );

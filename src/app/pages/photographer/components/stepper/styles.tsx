@@ -20,14 +20,22 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   /* border: 1px solid red; */
+
+  .step-button {
+    color: ${({ theme }) => theme.colors.primary.dark};
+    font-weight: 600;
+
+    &[disabled] {
+      color: ${({ theme }) => theme.colors.primary.light};
+    }
+  }
 `;
 
 export const SetpContentContainer = styled.div`
   height: 95%;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 16px;
+  justify-content: center;
+  align-items: center;
   /* border: 1px solid red; */
 `;
