@@ -11,7 +11,6 @@ export const ContentContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.primary.dark};
-  /* border: 1px solid red; */
 `;
 
 export const Form = styled.form``;
