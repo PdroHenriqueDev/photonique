@@ -1,3 +1,3 @@
 export interface FilesDragAndDropProps {
-  onUpload: any;
+  onFilesSelect: any;
 }

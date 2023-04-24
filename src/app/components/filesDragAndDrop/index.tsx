@@ -2,7 +2,7 @@ import { FilesDragAndDropProps } from 'app/models/components/filesDragAndDrop';
 import { useEffect, useRef, useState } from 'react';
 import { ClickText, Container, Text } from './styles';
 
-function FilesDragAndDrop({ onUpload }: FilesDragAndDropProps) {
+function FilesDragAndDrop({ onFilesSelect }: FilesDragAndDropProps) {
   const [dragging, setDragging] = useState(false);
 
   const drop: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -19,6 +19,11 @@ function FilesDragAndDrop({ onUpload }: FilesDragAndDropProps) {
       dropElement?.removeEventListener('drop', handleDrop);
     };
   }, []);
+
+  const handleFiles = (files: any) => {
+    const selectedFiles = Array.from(files);
+    onFilesSelect(selectedFiles);
+  };
 
   const handleDragOver = (e: {
     preventDefault: () => void;
@@ -37,9 +42,7 @@ function FilesDragAndDrop({ onUpload }: FilesDragAndDropProps) {
     const { files } = e.dataTransfer;
 
     if (files && files.length) {
-      console.log('gopt here , files', files);
-
-      //   onUpload(files);
+      handleFiles(e.target.files);
     }
 
     setDragging(false);
@@ -48,7 +51,7 @@ function FilesDragAndDrop({ onUpload }: FilesDragAndDropProps) {
   const handleChange = (e: any) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      // handleFiles(e.target.files);
+      handleFiles(e.target.files);
     }
   };
 
