@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container, ContentContainer, SetpContentContainer } from './styles';
 import PhotosForm from '../../components/photosForm';
+import PhotosUpload from '../../components/photosUpload';
 
 const steps = [
   'Qualifique suas fotos',
@@ -87,6 +88,7 @@ export default function HorizontalLinearStepper() {
             <>
               <SetpContentContainer>
                 {activeStep === 0 && <PhotosForm />}
+                {activeStep === 1 && <PhotosUpload />}
               </SetpContentContainer>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

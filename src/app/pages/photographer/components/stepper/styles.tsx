@@ -32,10 +32,11 @@ export const ContentContainer = styled.div`
 `;
 
 export const SetpContentContainer = styled.div`
-  height: 95%;
+  height: min(95%, 95%);
   width: 100%;
+  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
+  overflow-y: auto;
 `;
