@@ -42,7 +42,7 @@ function FilesDragAndDrop({ onFilesSelect }: FilesDragAndDropProps) {
     const { files } = e.dataTransfer;
 
     if (files && files.length) {
-      handleFiles(e.target.files);
+      handleFiles(files);
     }
 
     setDragging(false);
