@@ -101,7 +101,7 @@ function RegisterForm({
     }
   };
 
-  const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGenderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setGenter(event.target.value);
 
     if (!event.target.value) {
@@ -155,7 +155,7 @@ function RegisterForm({
   };
 
   const handleStateChange = (
-    event: React.ChangeEvent<HTMLInputElement> | string,
+    event: React.ChangeEvent<HTMLSelectElement> | string,
   ) => {
     const value =
       typeof event === 'string' || !event ? event : event.target.value;
@@ -172,7 +172,7 @@ function RegisterForm({
     }
   };
 
-  const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCity(event.target.value);
 
     if (!event.target.value) {

@@ -19,7 +19,9 @@ export default function DynamicSelect({
         error={error}
         value={value}
       >
-        <option value="">{emptyMessa}</option>
+        <option value="" disabled>
+          {emptyMessa}
+        </option>
         <>
           {options.map((option) => (
             <option
