@@ -1,4 +1,10 @@
-import { Container, ContentContainer, FileUploadContainer } from './styles';
+import {
+  Container,
+  ContentContainer,
+  DragDropContainer,
+  FilesContainer,
+  FileUploadContainer,
+} from './styles';
 import FileUpload from './components/fileUpload';
 import FilesDragAndDrop from '@components/filesDragAndDrop';
 import { useState } from 'react';
@@ -7,20 +13,23 @@ function PhotosUpload() {
   const [files, setFiles] = useState([]);
 
   const onFilesSelect = (files: any) => {
-    console.log('got here in onFilesSelect', files);
     setFiles(files);
   };
 
   return (
     <Container>
       <ContentContainer>
-        <FilesDragAndDrop onFilesSelect={onFilesSelect} />
+        <DragDropContainer>
+          <FilesDragAndDrop onFilesSelect={onFilesSelect} />
+        </DragDropContainer>
 
-        {files.map((_file, index) => (
-          <FileUploadContainer key={index}>
-            <FileUpload />
-          </FileUploadContainer>
-        ))}
+        <FilesContainer>
+          {files.map((_file, index) => (
+            <FileUploadContainer key={index}>
+              <FileUpload />
+            </FileUploadContainer>
+          ))}
+        </FilesContainer>
       </ContentContainer>
     </Container>
   );
