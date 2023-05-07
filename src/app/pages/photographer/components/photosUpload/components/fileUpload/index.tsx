@@ -7,15 +7,17 @@ import {
   FileNameText,
   FileSizeText,
 } from './styles';
+import { FileUploadProps } from 'app/models/components/fileUpload.model';
 
-function FileUpload() {
+function FileUpload({ isSubmitting = false }: FileUploadProps) {
   return (
     <Container>
       <PhotoIcon fontSize="large" className="photo-icon" />
-      <ContentContainer>
+      <ContentContainer isSubmitting={isSubmitting}>
         <FileNameText>nome do arquivo</FileNameText>
-        <LinearBuffer />
-        <FileSizeText>12.4 de 15.2MB</FileSizeText>
+        {isSubmitting && <LinearBuffer />}
+        {isSubmitting && <FileSizeText>12.4 de 15.2MB</FileSizeText>}
+        {!isSubmitting && <FileSizeText>15.2MB</FileSizeText>}
       </ContentContainer>
       <CloseIcon className="close-icon" />
     </Container>

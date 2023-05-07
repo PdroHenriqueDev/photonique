@@ -1,4 +1,9 @@
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+
+interface ContentContainerProps extends HTMLAttributes<HTMLDivElement> {
+  isSubmitting?: boolean;
+}
 
 export const Container = styled.div`
   width: 100%;
@@ -20,12 +25,13 @@ export const Container = styled.div`
   }
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<ContentContainerProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: ${({ isSubmitting }) =>
+    isSubmitting ? 'initial' : 'space-evenly'};
   margin-left: 8px;
-  /* border: 1px solid red; */
 `;
 
 export const FileNameText = styled.span`
