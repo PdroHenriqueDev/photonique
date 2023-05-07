@@ -1,7 +1,7 @@
 import { SnackbarCloseReason, SnackbarProps } from '@mui/material';
 
 export interface StyledSnackbarProps extends SnackbarProps {
-  color?: 'success' | 'danger';
+  color?: 'success' | 'danger' | 'warning';
   handleClose?:
     | ((
         event: Event | React.SyntheticEvent<unknown, Event>,
@@ -12,5 +12,8 @@ export interface StyledSnackbarProps extends SnackbarProps {
 }
 
 export interface SnackbarContextValue {
-  showSnackbar: (message: string, color?: 'success' | 'danger') => void;
+  showSnackbar: (
+    message: string,
+    color?: 'success' | 'danger' | 'warning',
+  ) => void;
 }

@@ -19,5 +19,8 @@ export const defaultTheme: DefaultTheme = {
     success: {
       main: '#51CA73',
     },
+    warning: {
+      main: '#F9C33F',
+    },
   },
 };
