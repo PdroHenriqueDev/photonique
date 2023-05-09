@@ -23,6 +23,21 @@ class PhotographerService {
       password,
     });
   }
+
+  uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return axios.post(
+      `${this.API_PHOTONIQUE}/photographers/photo/upload`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+  }
 }
 
 export default new PhotographerService();
