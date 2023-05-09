@@ -7,26 +7,37 @@ import {
 } from './styles';
 import FileUpload from './components/fileUpload';
 import FilesDragAndDrop from '@components/filesDragAndDrop';
+import { PhotosUploadProps } from 'app/models/components/photosUpload.mode';
 import { useState } from 'react';
 
-function PhotosUpload() {
-  const [files, setFiles] = useState([]);
+export default function PhotosUpload({
+  files = [],
+  onFilesSelect,
+}: PhotosUploadProps) {
+  const [filesSelected, setFilesSelected] = useState<File[]>([]);
 
-  const onFilesSelect = (files: any) => {
-    setFiles(files);
+  const handleFilesSelect = (filesSelected: File[]) => {
+    onFilesSelect(filesSelected);
+    setFilesSelected(filesSelected || files);
+  };
+
+  const handleRemoveFile = (index: number) => {
+    const newFiles = [...filesSelected];
+    newFiles.splice(index, 1);
+    setFilesSelected(newFiles);
   };
 
   return (
     <Container>
       <ContentContainer>
         <DragDropContainer>
-          <FilesDragAndDrop onFilesSelect={onFilesSelect} />
+          <FilesDragAndDrop onFilesSelect={handleFilesSelect} />
         </DragDropContainer>
 
         <FilesContainer>
-          {files.map((_file, index) => (
+          {filesSelected.map((_file, index) => (
             <FileUploadContainer key={index}>
-              <FileUpload />
+              <FileUpload onRemove={() => handleRemoveFile(index)} />
             </FileUploadContainer>
           ))}
         </FilesContainer>
@@ -34,5 +45,3 @@ function PhotosUpload() {
     </Container>
   );
 }
-
-export default PhotosUpload;

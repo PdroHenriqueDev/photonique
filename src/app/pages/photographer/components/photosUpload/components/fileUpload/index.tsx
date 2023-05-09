@@ -9,7 +9,14 @@ import {
 } from './styles';
 import { FileUploadProps } from 'app/models/components/fileUpload.model';
 
-function FileUpload({ isSubmitting = false }: FileUploadProps) {
+export default function FileUpload({
+  isSubmitting = false,
+  onRemove,
+}: FileUploadProps) {
+  const handleRemoveClick = () => {
+    onRemove();
+  };
+
   return (
     <Container>
       <PhotoIcon fontSize="large" className="photo-icon" />
@@ -19,9 +26,7 @@ function FileUpload({ isSubmitting = false }: FileUploadProps) {
         {isSubmitting && <FileSizeText>12.4 de 15.2MB</FileSizeText>}
         {!isSubmitting && <FileSizeText>15.2MB</FileSizeText>}
       </ContentContainer>
-      <CloseIcon className="close-icon" />
+      <CloseIcon className="close-icon" onClick={handleRemoveClick} />
     </Container>
   );
 }
-
-export default FileUpload;

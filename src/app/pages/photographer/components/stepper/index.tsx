@@ -10,6 +10,7 @@ import EventForm from '../eventForm';
 import PhotosUpload from '../../components/photosUpload';
 import { EventFormProps } from 'app/models/components/eventForm.model';
 import { SnackbarContext } from 'app/context/snackBar';
+import PhotographerService from '../../../../services/PhotographerService';
 
 const steps = [
   'Qualifique suas fotos',
@@ -28,6 +29,7 @@ export default function HorizontalLinearStepper() {
     city: '',
     date: null,
   });
+  const [files, setFiles] = useState<File[]>([]);
 
   const { showSnackbar } = useContext(SnackbarContext);
 
@@ -42,8 +44,11 @@ export default function HorizontalLinearStepper() {
 
     if (activeStep === 0 && !isEventFormFilled) {
       showSnackbar('Preencha o formulário', 'warning');
-      return;
+      //   return;
     }
+    console.log('got here in teste', files);
+
+    await uploadPhotos(files);
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -70,6 +75,19 @@ export default function HorizontalLinearStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleFilesSelect = (filesSelected: File[]) => {
+    setFiles(filesSelected);
+  };
+
+  const uploadPhotos = async (files: File[]) => {
+    console.log('got here in uploadPhotos', files);
+    files.forEach(async (file) => {
+      await PhotographerService.uploadFile(file).then((res) => {
+        console.log('got here in uploadPhotos', res);
+      });
+    });
   };
 
   return (
@@ -109,7 +127,9 @@ export default function HorizontalLinearStepper() {
             <>
               <SetpContentContainer>
                 {activeStep === 0 && <EventForm form={eventForm} />}
-                {activeStep === 1 && <PhotosUpload />}
+                {activeStep === 1 && (
+                  <PhotosUpload onFilesSelect={handleFilesSelect} />
+                )}
               </SetpContentContainer>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

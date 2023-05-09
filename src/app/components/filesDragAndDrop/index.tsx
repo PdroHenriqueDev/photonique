@@ -20,7 +20,7 @@ function FilesDragAndDrop({ onFilesSelect }: FilesDragAndDropProps) {
     };
   }, []);
 
-  const handleFiles = (files: any) => {
+  const handleFiles = (files: File[]) => {
     const selectedFiles = Array.from(files);
     onFilesSelect(selectedFiles);
   };
