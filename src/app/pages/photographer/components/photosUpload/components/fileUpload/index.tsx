@@ -12,19 +12,26 @@ import { FileUploadProps } from 'app/models/components/fileUpload.model';
 export default function FileUpload({
   isSubmitting = false,
   onRemove,
+  file,
 }: FileUploadProps) {
   const handleRemoveClick = () => {
     onRemove();
+  };
+
+  const { name, size } = file;
+
+  const bytesToMB = (bytes: number) => {
+    return (bytes / (1024 * 1024)).toFixed(2);
   };
 
   return (
     <Container>
       <PhotoIcon fontSize="large" className="photo-icon" />
       <ContentContainer isSubmitting={isSubmitting}>
-        <FileNameText>nome do arquivo</FileNameText>
+        <FileNameText>{name}</FileNameText>
         {isSubmitting && <LinearBuffer />}
         {isSubmitting && <FileSizeText>12.4 de 15.2MB</FileSizeText>}
-        {!isSubmitting && <FileSizeText>15.2MB</FileSizeText>}
+        {!isSubmitting && <FileSizeText>{bytesToMB(size)}MB</FileSizeText>}
       </ContentContainer>
       <CloseIcon className="close-icon" onClick={handleRemoveClick} />
     </Container>

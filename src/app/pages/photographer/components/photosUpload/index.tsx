@@ -38,7 +38,7 @@ export default function PhotosUpload({
         <FilesContainer>
           {filesList.map((file, index) => (
             <FileUploadContainer key={index}>
-              <FileUpload onRemove={() => handleRemoveFile(file)} />
+              <FileUpload file={file} onRemove={() => handleRemoveFile(file)} />
             </FileUploadContainer>
           ))}
         </FilesContainer>
