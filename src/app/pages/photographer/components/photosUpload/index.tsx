@@ -24,6 +24,7 @@ export default function PhotosUpload({
   const handleRemoveFile = (index: number) => {
     const newFiles = [...filesSelected];
     newFiles.splice(index, 1);
+    onFilesSelect(newFiles);
     setFilesSelected(newFiles);
   };
 
