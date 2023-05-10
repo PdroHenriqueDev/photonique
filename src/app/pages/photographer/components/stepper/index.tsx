@@ -48,7 +48,7 @@ export default function HorizontalLinearStepper() {
     }
     console.log('got here in teste', files);
 
-    await uploadPhotos(files);
+    if (activeStep === 1) await uploadPhotos(files);
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -82,7 +82,6 @@ export default function HorizontalLinearStepper() {
   };
 
   const uploadPhotos = async (files: File[]) => {
-    console.log('got here in uploadPhotos', files);
     files.forEach(async (file) => {
       await PhotographerService.uploadFile(file).then((res) => {
         console.log('got here in uploadPhotos', res);
@@ -128,7 +127,10 @@ export default function HorizontalLinearStepper() {
               <SetpContentContainer>
                 {activeStep === 0 && <EventForm form={eventForm} />}
                 {activeStep === 1 && (
-                  <PhotosUpload onFilesSelect={handleFilesSelect} />
+                  <PhotosUpload
+                    files={files}
+                    onFilesSelect={handleFilesSelect}
+                  />
                 )}
               </SetpContentContainer>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

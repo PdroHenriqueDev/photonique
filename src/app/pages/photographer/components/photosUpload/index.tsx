@@ -16,16 +16,16 @@ export default function PhotosUpload({
 }: PhotosUploadProps) {
   const [filesSelected, setFilesSelected] = useState<File[]>([]);
 
+  const filesList = files || filesSelected;
+
   const handleFilesSelect = (filesSelected: File[]) => {
     onFilesSelect(filesSelected);
     setFilesSelected(filesSelected || files);
   };
 
-  const handleRemoveFile = (index: number) => {
-    const newFiles = [...filesSelected];
-    newFiles.splice(index, 1);
-    onFilesSelect(newFiles);
-    setFilesSelected(newFiles);
+  const handleRemoveFile = (fileRemoved: File) => {
+    const newFiles = [...filesList].filter((file) => file !== fileRemoved);
+    handleFilesSelect(newFiles);
   };
 
   return (
@@ -36,9 +36,9 @@ export default function PhotosUpload({
         </DragDropContainer>
 
         <FilesContainer>
-          {filesSelected.map((_file, index) => (
+          {filesList.map((file, index) => (
             <FileUploadContainer key={index}>
-              <FileUpload onRemove={() => handleRemoveFile(index)} />
+              <FileUpload onRemove={() => handleRemoveFile(file)} />
             </FileUploadContainer>
           ))}
         </FilesContainer>
