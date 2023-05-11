@@ -23,6 +23,7 @@ function FilesDragAndDrop({ onFilesSelect }: FilesDragAndDropProps) {
   const handleFiles = (files: File[]) => {
     const selectedFiles = Array.from(files);
     onFilesSelect(selectedFiles);
+    if (inputRef?.current) inputRef.current.value = '';
   };
 
   const handleDragOver = (e: {
