@@ -4,6 +4,8 @@ import {
   DragDropContainer,
   FilesContainer,
   FileUploadContainer,
+  TextContainer,
+  Text,
 } from './styles';
 import FileUpload from './components/fileUpload';
 import FilesDragAndDrop from '@components/filesDragAndDrop';
@@ -17,6 +19,7 @@ export default function PhotosUpload({
   const [filesSelected, setFilesSelected] = useState<File[]>([]);
 
   const filesList = files || filesSelected;
+  const total = filesList.length || null;
 
   const handleFilesSelect = (filesSelected: File[]) => {
     onFilesSelect(filesSelected);
@@ -34,6 +37,14 @@ export default function PhotosUpload({
         <DragDropContainer>
           <FilesDragAndDrop onFilesSelect={handleFilesSelect} />
         </DragDropContainer>
+
+        {total && (
+          <TextContainer>
+            <Text>
+              Total: <strong>{total}</strong>
+            </Text>
+          </TextContainer>
+        )}
 
         <FilesContainer>
           {filesList.map((file, index) => (
