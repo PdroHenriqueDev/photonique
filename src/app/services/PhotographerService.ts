@@ -3,6 +3,8 @@ import axios from 'axios';
 import { PhotographerProps } from 'app/models/photographer/photographer.mode';
 import PhotographerMapper from './mappers/PhotographerMapper';
 import { PhotographerServiceProps } from 'app/models/service/photographerService.model';
+import { EventFormProps } from 'app/models/components/eventForm.model';
+import EventMapper from './mappers/EventMapper';
 
 class PhotographerService {
   API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
@@ -22,6 +24,14 @@ class PhotographerService {
       email,
       password,
     });
+  }
+
+  createEvent(event: EventFormProps) {
+    const eventMapper = EventMapper.toDomain(event);
+    return axios.post(
+      `${this.API_PHOTONIQUE}/photographers/event`,
+      eventMapper,
+    );
   }
 
   uploadFile(file: File) {

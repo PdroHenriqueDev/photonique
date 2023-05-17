@@ -6,7 +6,7 @@ export default function Button(props: ButtonProps) {
   const { label, onClick, disabled, isLoading } = props;
   return (
     <DynamicButton onClick={onClick} disabled={disabled}>
-      {!isLoading ? label : <Spinner />}
+      {isLoading ? <Spinner /> : label}
     </DynamicButton>
   );
 }

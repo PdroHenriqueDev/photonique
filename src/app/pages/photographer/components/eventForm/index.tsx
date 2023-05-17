@@ -18,7 +18,7 @@ export default function EventForm({ form }: EventFormComponentProps) {
   const [name, setName] = useState('');
   const [local, setLocal] = useState('');
   const [state, setState] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState('');
   const [cities, setCities] = useState<CityProps[]>([]);
   const [city, setCity] = useState('');
   const [date, setDate] = useState<Dayjs | null>(null);
@@ -75,14 +75,14 @@ export default function EventForm({ form }: EventFormComponentProps) {
   ) => {
     const { value } = event.target;
 
-    setCategory(value);
+    setCategoryId(value);
 
     if (!value) {
-      setError({ field: 'category', message: 'Selecione uma categoria' });
+      setError({ field: 'categoryId', message: 'Selecione uma categoria' });
     } else {
-      removeError('category');
+      removeError('categoryId');
     }
-    form.category = value;
+    form.categoryId = value;
   };
 
   const handleStateChange = (
@@ -163,13 +163,15 @@ export default function EventForm({ form }: EventFormComponentProps) {
             <DynamicSelect
               emptyMessa={'Selecione a categoria do evento'}
               options={eventCategories}
-              value={category || form.category}
+              value={categoryId || form.categoryId}
               onChange={(e) => handleCategoryChange(e)}
-              error={!!getErrorMessageByFieldName('category')}
+              error={!!getErrorMessageByFieldName('categoryId')}
               //   disabled={isSubmitting}
             />
-            {getErrorMessageByFieldName('category') && (
-              <ErrorMessage message={getErrorMessageByFieldName('category')} />
+            {getErrorMessageByFieldName('categoryId') && (
+              <ErrorMessage
+                message={getErrorMessageByFieldName('categoryId')}
+              />
             )}
           </FormRow>
 

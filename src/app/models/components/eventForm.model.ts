@@ -8,7 +8,7 @@ export interface EventFormProps {
   [key: string]: string | Dayjs | null | undefined;
   name: string;
   local: string;
-  category: string;
+  categoryId: string;
   state: string;
   city: string;
   date: Dayjs | null | undefined;
