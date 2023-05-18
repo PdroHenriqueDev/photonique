@@ -41,7 +41,6 @@ export default function HorizontalLinearStepper() {
       const isEventFormFilled = Object.values(eventForm).every((value) =>
         Boolean(value),
       );
-      console.log('got here', eventForm);
 
       if (!isEventFormFilled) {
         showSnackbar('Preencha o formulário todo', 'warning');
@@ -49,10 +48,7 @@ export default function HorizontalLinearStepper() {
       }
     }
 
-    if (activeStep === 1 && !eventId) {
-      showSnackbar('Erro ao cadastrar evento. Tente novamente.', 'warning');
-      return false;
-    }
+    if (activeStep === 1 && files.length === 0) return false;
 
     return true;
   };
@@ -61,14 +57,8 @@ export default function HorizontalLinearStepper() {
     return skipped.has(step);
   };
 
-  const handleButton = async () => {
-    const isValid = validateSteps();
-    console.log('got here in handleButton', isValid);
-    if (!isValid) return;
-
-    if (activeStep === 0) await createEvent(eventForm);
-
-    if (activeStep === 1) await uploadPhotos(files);
+  const changeStep = (error = false) => {
+    if (error) return;
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -80,18 +70,28 @@ export default function HorizontalLinearStepper() {
     setSkipped(newSkipped);
   };
 
+  const handleButton = async () => {
+    const isValid = validateSteps();
+    // console.log('got here in handleButton', error);
+    if (!isValid) return;
+
+    if (activeStep === 0) await createEvent(eventForm);
+
+    if (activeStep === 1) await uploadPhotos(files);
+  };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
+  //   const handleSkip = () => {
+  //     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  //     setSkipped((prevSkipped) => {
+  //       const newSkipped = new Set(prevSkipped.values());
+  //       newSkipped.add(activeStep);
+  //       return newSkipped;
+  //     });
+  //   };
 
   const handleReset = () => {
     setActiveStep(0);
@@ -105,11 +105,14 @@ export default function HorizontalLinearStepper() {
     setIsSubmitting(true);
     try {
       const postRequest = await PhotographerService.createEvent(eventForm);
-      const { message } = postRequest.data;
+      const { message, data } = postRequest.data;
+      setEventId(data);
       showSnackbar(message, 'success');
+      changeStep();
     } catch (error: any) {
       const { message } = error.response.data;
       showSnackbar(message, 'danger');
+      changeStep(true);
     } finally {
       setIsSubmitting(false);
     }
