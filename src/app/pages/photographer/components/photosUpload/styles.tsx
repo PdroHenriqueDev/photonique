@@ -50,4 +50,10 @@ export const FilesContainer = styled.div`
 export const FileUploadContainer = styled.div`
   margin-top: 8px;
   width: 100%;
+
+  &.file-removed {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: calc(100% - 2px);
+  }
 `;

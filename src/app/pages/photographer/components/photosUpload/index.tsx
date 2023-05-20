@@ -11,14 +11,16 @@ import FileUpload from './components/fileUpload';
 import FilesDragAndDrop from '@components/filesDragAndDrop';
 import { PhotosUploadProps } from 'app/models/components/photosUpload.mode';
 import { useState } from 'react';
+import { delay } from 'app/utils/delay';
 
 export default function PhotosUpload({
   files = [],
   onFilesSelect,
 }: PhotosUploadProps) {
   const [filesSelected, setFilesSelected] = useState<File[]>([]);
+  const [removedFiles, setRemovedFiles] = useState<File[]>([]);
 
-  const filesList = files || filesSelected;
+  const filesList = filesSelected.length > 0 ? filesSelected : files;
   const total = filesList.length || null;
 
   const handleFilesSelect = (filesSelected: File[]) => {
@@ -26,9 +28,15 @@ export default function PhotosUpload({
     setFilesSelected(filesSelected || files);
   };
 
-  const handleRemoveFile = (fileRemoved: File) => {
-    const newFiles = [...filesList].filter((file) => file !== fileRemoved);
+  const handleRemoveFile = async (fileRemoved: File) => {
+    setRemovedFiles((prevRemovedFiles) => [...prevRemovedFiles, fileRemoved]);
+    await delay(250);
+    const newFiles = filesList.filter((file) => file !== fileRemoved);
     handleFilesSelect(newFiles);
+  };
+
+  const isFileRemoved = (file: File) => {
+    return removedFiles.includes(file);
   };
 
   return (
@@ -48,7 +56,10 @@ export default function PhotosUpload({
 
         <FilesContainer>
           {filesList.map((file, index) => (
-            <FileUploadContainer key={index}>
+            <FileUploadContainer
+              key={index}
+              className={isFileRemoved(file) ? 'file-removed' : ''}
+            >
               <FileUpload file={file} onRemove={() => handleRemoveFile(file)} />
             </FileUploadContainer>
           ))}
