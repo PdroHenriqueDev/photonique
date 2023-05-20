@@ -1,24 +1,24 @@
 import { Container, ContentContainer, Form, FormRow } from './styles';
 import Input from '@components/input';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DynamicSelect from '@components/select';
 import { states } from 'app/utils/variables/states-cities/states';
-import { eventCategories } from 'app/utils/variables/eventCategory';
 import { citiesByState } from 'app/utils/variables/states-cities/cities';
 import { CityProps } from 'app/models/variables/city.model';
 import { UseError } from 'app/hooks/useError';
 import ErrorMessage from '@components/errorMessage';
 import DatePicker from '@components/datePicker';
 import { Dayjs } from 'dayjs';
-import { DateValidationError } from '@mui/x-date-pickers';
-import { PickerChangeHandler } from '@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue';
 import { EventFormComponentProps } from 'app/models/components/eventForm.model';
+import StaticService from '../../../../services/StaticService';
+import { SnackbarContext } from 'app/context/snackBar';
 
 export default function EventForm({ form }: EventFormComponentProps) {
   const [name, setName] = useState('');
   const [local, setLocal] = useState('');
   const [state, setState] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [eventCategories, setEventCategories] = useState([]);
   const [cities, setCities] = useState<CityProps[]>([]);
   const [city, setCity] = useState('');
   const [date, setDate] = useState<Dayjs | null>(null);
@@ -26,13 +26,30 @@ export default function EventForm({ form }: EventFormComponentProps) {
   const { setError, removeError, getErrorMessageByFieldName, errors } =
     UseError();
 
+  const { showSnackbar } = useContext(SnackbarContext);
+
   useEffect(() => {
     if (form.state.length > 1) {
       const citiesFiltered = citiesByState(form.state);
       setCities(citiesFiltered);
       setCity(form.city);
     }
-  }, [form.city, form.state]);
+
+    const getCategories = async () => {
+      try {
+        const getRequest = await StaticService.getCategories();
+        const { data } = getRequest.data;
+        setEventCategories(data);
+      } catch {
+        showSnackbar(
+          'Algum erro no servidor, tente novamente em alguns instantes',
+          'danger',
+        );
+      }
+    };
+
+    getCategories();
+  }, [form.city, form.state, showSnackbar]);
 
   const handleEventNameChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -116,10 +133,7 @@ export default function EventForm({ form }: EventFormComponentProps) {
     form.city = value;
   };
 
-  const handleDateChange: PickerChangeHandler<
-    Dayjs | null,
-    DateValidationError
-  > = (date: Dayjs | null) => {
+  const handleDateChange = (date: Dayjs | null) => {
     setDate(date);
 
     if (!date) {
