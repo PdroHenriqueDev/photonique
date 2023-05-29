@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { PhotographerProps } from 'app/models/photographer/photographer.mode';
 import PhotographerMapper from './mappers/PhotographerMapper';
 import { ServiceResponseProps } from 'app/models/service/serviceResponse.model';
@@ -34,7 +34,7 @@ class PhotographerService {
     );
   }
 
-  uploadFile(file: File) {
+  uploadFile(file: File, config?: AxiosRequestConfig) {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -45,6 +45,7 @@ class PhotographerService {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        ...config,
       },
     );
   }

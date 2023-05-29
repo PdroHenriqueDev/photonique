@@ -48,8 +48,8 @@ export default function EventForm({ form }: EventFormComponentProps) {
       }
     };
 
-    getCategories();
-  }, [form.city, form.state, showSnackbar]);
+    if (!eventCategories.length) getCategories();
+  }, [eventCategories.length, form.city, form.state, showSnackbar]);
 
   const handleEventNameChange = (
     event: React.ChangeEvent<HTMLInputElement>,

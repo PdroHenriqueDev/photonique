@@ -12,6 +12,7 @@ import { EventFormProps } from 'app/models/components/eventForm.model';
 import { SnackbarContext } from 'app/context/snackBar';
 import PhotographerService from '../../../../services/PhotographerService';
 import Spinner from '@components/spinner';
+import { PhotoProps } from 'app/models/components/photosUpload.mode';
 
 const steps = [
   'Qualifique suas fotos',
@@ -30,7 +31,7 @@ export default function HorizontalLinearStepper() {
     city: '',
     date: null,
   });
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<PhotoProps[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [eventId, setEventId] = useState('');
 
@@ -97,7 +98,7 @@ export default function HorizontalLinearStepper() {
     setActiveStep(0);
   };
 
-  const handleFilesSelect = (filesSelected: File[]) => {
+  const handleFilesSelect = (filesSelected: PhotoProps[]) => {
     setFiles(filesSelected);
   };
 
@@ -118,12 +119,29 @@ export default function HorizontalLinearStepper() {
     }
   };
 
-  const uploadPhotos = async (files: File[]) => {
-    files.forEach(async (file) => {
-      await PhotographerService.uploadFile(file).then((res) => {
-        console.log('got here in uploadPhotos', res);
+  const uploadPhotos = async (photos: PhotoProps[]) => {
+    setIsSubmitting(true);
+    try {
+      photos.forEach(async (photo) => {
+        const { file } = photo;
+        await PhotographerService.uploadFile(file, {
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent?.total) {
+              const progressRequest = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total,
+              );
+              photo.progress = progressRequest;
+              handleFilesSelect(photos);
+            }
+          },
+        }).then((res) => {
+          // console.log('got here in uploadPhotos', res);
+        });
       });
-    });
+    } catch {
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleButtonText = (activeStep: number): string => {
@@ -175,8 +193,9 @@ export default function HorizontalLinearStepper() {
                 {activeStep === 0 && <EventForm form={eventForm} />}
                 {activeStep === 1 && (
                   <PhotosUpload
-                    files={files}
+                    photos={files}
                     onFilesSelect={handleFilesSelect}
+                    isSubmitting={isSubmitting}
                   />
                 )}
               </SetpContentContainer>

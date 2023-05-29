@@ -9,33 +9,37 @@ import {
 } from './styles';
 import FileUpload from './components/fileUpload';
 import FilesDragAndDrop from '@components/filesDragAndDrop';
-import { PhotosUploadProps } from 'app/models/components/photosUpload.mode';
+import {
+  PhotoProps,
+  PhotosUploadProps,
+} from 'app/models/components/photosUpload.mode';
 import { useState } from 'react';
 import { delay } from 'app/utils/delay';
 
 export default function PhotosUpload({
-  files = [],
+  photos = [],
   onFilesSelect,
+  isSubmitting = false,
 }: PhotosUploadProps) {
-  const [filesSelected, setFilesSelected] = useState<File[]>([]);
-  const [removedFiles, setRemovedFiles] = useState<File[]>([]);
+  const [filesSelected, setFilesSelected] = useState<PhotoProps[]>([]);
+  const [removedFiles, setRemovedFiles] = useState<PhotoProps[]>([]);
 
-  const filesList = filesSelected.length > 0 ? filesSelected : files;
-  const total = filesList.length || null;
+  const photosList = filesSelected.length > 0 ? filesSelected : photos;
+  const total = photosList.length || null;
 
-  const handleFilesSelect = (filesSelected: File[]) => {
-    onFilesSelect(filesSelected);
-    setFilesSelected(filesSelected || files);
+  const handleFilesSelect = (photosSelected: PhotoProps[]) => {
+    onFilesSelect(photosSelected);
+    setFilesSelected(photosSelected || photos);
   };
 
-  const handleRemoveFile = async (fileRemoved: File) => {
+  const handleRemoveFile = async (fileRemoved: PhotoProps) => {
     setRemovedFiles((prevRemovedFiles) => [...prevRemovedFiles, fileRemoved]);
     await delay(250);
-    const newFiles = filesList.filter((file) => file !== fileRemoved);
+    const newFiles = photosList.filter((file) => file !== fileRemoved);
     handleFilesSelect(newFiles);
   };
 
-  const isFileRemoved = (file: File) => {
+  const isFileRemoved = (file: PhotoProps) => {
     return removedFiles.includes(file);
   };
 
@@ -55,12 +59,17 @@ export default function PhotosUpload({
         )}
 
         <FilesContainer>
-          {filesList.map((file, index) => (
+          {photosList.map((photo, index) => (
             <FileUploadContainer
               key={index}
-              className={isFileRemoved(file) ? 'file-removed' : ''}
+              className={isFileRemoved(photo) ? 'file-removed' : ''}
             >
-              <FileUpload file={file} onRemove={() => handleRemoveFile(file)} />
+              <FileUpload
+                file={photo.file}
+                onRemove={() => handleRemoveFile(photo)}
+                isSubmitting={isSubmitting}
+                progress={photo.progress}
+              />
             </FileUploadContainer>
           ))}
         </FilesContainer>

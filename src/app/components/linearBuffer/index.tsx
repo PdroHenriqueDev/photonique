@@ -1,4 +1,3 @@
-import * as React from 'react';
 import LinearProgress, {
   LinearProgressProps,
 } from '@mui/material/LinearProgress';
@@ -9,6 +8,7 @@ import {
   PercentageText,
   PercentageTextContainer,
 } from './styles';
+import { useState, useEffect } from 'react';
 
 function LinearProgressWithLabel(
   props: LinearProgressProps & { value: number },
@@ -25,19 +25,23 @@ function LinearProgressWithLabel(
   );
 }
 
-export default function LinearWithValueLabel() {
-  const [progress, setProgress] = React.useState(10);
+export default function LinearWithValueLabel({
+  progress,
+}: {
+  progress: number;
+}) {
+  //   const [progress, setProgress] = useState(10);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 10 : prevProgress + 10,
-      );
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  //   useEffect(() => {
+  //     const timer = setInterval(() => {
+  //       setProgress((prevProgress) =>
+  //         prevProgress >= 100 ? 10 : prevProgress + 10,
+  //       );
+  //     }, 800);
+  //     return () => {
+  //       clearInterval(timer);
+  //     };
+  //   }, []);
 
   return (
     <LinearWithValueLabelContainer>

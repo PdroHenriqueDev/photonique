@@ -13,6 +13,7 @@ export default function FileUpload({
   isSubmitting = false,
   onRemove,
   file,
+  progress,
 }: FileUploadProps) {
   const handleRemoveClick = () => {
     onRemove();
@@ -29,9 +30,8 @@ export default function FileUpload({
       <PhotoIcon fontSize="large" className="photo-icon" />
       <ContentContainer isSubmitting={isSubmitting}>
         <FileNameText>{name}</FileNameText>
-        {isSubmitting && <LinearBuffer />}
-        {isSubmitting && <FileSizeText>12.4 de 15.2MB</FileSizeText>}
-        {!isSubmitting && <FileSizeText>{bytesToMB(size)}MB</FileSizeText>}
+        {isSubmitting && <LinearBuffer progress={progress} />}
+        <FileSizeText>{bytesToMB(size)}MB</FileSizeText>
       </ContentContainer>
       <CloseIcon className="close-icon" onClick={handleRemoveClick} />
     </Container>
