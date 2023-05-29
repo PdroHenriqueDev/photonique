@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -6,8 +6,13 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container, ContentContainer, SetpContentContainer } from './styles';
-import PhotosForm from '../../components/photosForm';
+import EventForm from '../eventForm';
 import PhotosUpload from '../../components/photosUpload';
+import { EventFormProps } from 'app/models/components/eventForm.model';
+import { SnackbarContext } from 'app/context/snackBar';
+import PhotographerService from '../../../../services/PhotographerService';
+import Spinner from '@components/spinner';
+import { PhotoProps } from 'app/models/components/photosUpload.mode';
 
 const steps = [
   'Qualifique suas fotos',
@@ -16,14 +21,46 @@ const steps = [
 ];
 
 export default function HorizontalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set<number>());
+  const [eventForm] = useState<EventFormProps>({
+    name: '',
+    local: '',
+    categoryId: '',
+    state: '',
+    city: '',
+    date: null,
+  });
+  const [files, setFiles] = useState<PhotoProps[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [eventId, setEventId] = useState('');
+
+  const { showSnackbar } = useContext(SnackbarContext);
+
+  const validateSteps = (): boolean => {
+    if (activeStep === 0) {
+      const isEventFormFilled = Object.values(eventForm).every((value) =>
+        Boolean(value),
+      );
+
+      if (!isEventFormFilled) {
+        showSnackbar('Preencha o formulário todo', 'warning');
+        return false;
+      }
+    }
+
+    if (activeStep === 1 && files.length === 0) return false;
+
+    return true;
+  };
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const changeStep = (error = false) => {
+    if (error) return;
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -34,21 +71,87 @@ export default function HorizontalLinearStepper() {
     setSkipped(newSkipped);
   };
 
+  const handleButton = async () => {
+    const isValid = validateSteps();
+    // console.log('got here in handleButton', error);
+    if (!isValid) return;
+
+    if (activeStep === 0) await createEvent(eventForm);
+
+    if (activeStep === 1) await uploadPhotos(files);
+  };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
+  //   const handleSkip = () => {
+  //     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  //     setSkipped((prevSkipped) => {
+  //       const newSkipped = new Set(prevSkipped.values());
+  //       newSkipped.add(activeStep);
+  //       return newSkipped;
+  //     });
+  //   };
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleFilesSelect = (filesSelected: PhotoProps[]) => {
+    setFiles(filesSelected);
+  };
+
+  const createEvent = async (eventForm: EventFormProps) => {
+    setIsSubmitting(true);
+    try {
+      const postRequest = await PhotographerService.createEvent(eventForm);
+      const { message, data } = postRequest.data;
+      setEventId(data);
+      showSnackbar(message, 'success');
+      changeStep();
+    } catch (error: any) {
+      const { message } = error.response.data;
+      showSnackbar(message, 'danger');
+      changeStep(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const uploadPhotos = async (photos: PhotoProps[]) => {
+    setIsSubmitting(true);
+    try {
+      photos.forEach(async (photo) => {
+        const { file } = photo;
+        await PhotographerService.uploadFile(file, {
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent?.total) {
+              const progressRequest = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total,
+              );
+              photo.progress = progressRequest;
+              handleFilesSelect(photos);
+            }
+          },
+        }).then((res) => {
+          // console.log('got here in uploadPhotos', res);
+        });
+      });
+    } catch {
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleButtonText = (activeStep: number): string => {
+    const stepIndex = {
+      0: 'Salvar evento',
+      1: 'Enviar fotos',
+      [steps.length - 1]: 'Finalizar',
+    };
+
+    return stepIndex[activeStep];
   };
 
   return (
@@ -87,8 +190,14 @@ export default function HorizontalLinearStepper() {
           ) : (
             <>
               <SetpContentContainer>
-                {activeStep === 0 && <PhotosForm />}
-                {activeStep === 1 && <PhotosUpload />}
+                {activeStep === 0 && <EventForm form={eventForm} />}
+                {activeStep === 1 && (
+                  <PhotosUpload
+                    photos={files}
+                    onFilesSelect={handleFilesSelect}
+                    isSubmitting={isSubmitting}
+                  />
+                )}
               </SetpContentContainer>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
@@ -101,8 +210,12 @@ export default function HorizontalLinearStepper() {
                   Voltar
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleNext} className="step-button">
-                  {activeStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
+                <Button
+                  className="step-button"
+                  onClick={handleButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? <Spinner /> : handleButtonText(activeStep)}
                 </Button>
               </Box>
             </>

@@ -1,23 +1,24 @@
 import { Container, ContentContainer, Form, FormRow } from './styles';
 import Input from '@components/input';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DynamicSelect from '@components/select';
 import { states } from 'app/utils/variables/states-cities/states';
-import { eventCategories } from 'app/utils/variables/eventCategory';
 import { citiesByState } from 'app/utils/variables/states-cities/cities';
 import { CityProps } from 'app/models/variables/city.model';
 import { UseError } from 'app/hooks/useError';
 import ErrorMessage from '@components/errorMessage';
 import DatePicker from '@components/datePicker';
 import { Dayjs } from 'dayjs';
-import { DateValidationError } from '@mui/x-date-pickers';
-import { PickerChangeHandler } from '@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue';
+import { EventFormComponentProps } from 'app/models/components/eventForm.model';
+import StaticService from '../../../../services/StaticService';
+import { SnackbarContext } from 'app/context/snackBar';
 
-function PhotosForm() {
-  const [eventName, setEventName] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
+export default function EventForm({ form }: EventFormComponentProps) {
+  const [name, setName] = useState('');
+  const [local, setLocal] = useState('');
   const [state, setState] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const [eventCategories, setEventCategories] = useState([]);
   const [cities, setCities] = useState<CityProps[]>([]);
   const [city, setCity] = useState('');
   const [date, setDate] = useState<Dayjs | null>(null);
@@ -25,38 +26,65 @@ function PhotosForm() {
   const { setError, removeError, getErrorMessageByFieldName, errors } =
     UseError();
 
+  const { showSnackbar } = useContext(SnackbarContext);
+
+  useEffect(() => {
+    if (form.state.length > 1) {
+      const citiesFiltered = citiesByState(form.state);
+      setCities(citiesFiltered);
+      setCity(form.city);
+    }
+
+    const getCategories = async () => {
+      try {
+        const getRequest = await StaticService.getCategories();
+        const { data } = getRequest.data;
+        setEventCategories(data);
+      } catch {
+        showSnackbar(
+          'Algum erro no servidor, tente novamente em alguns instantes',
+          'danger',
+        );
+      }
+    };
+
+    if (!eventCategories.length) getCategories();
+  }, [eventCategories.length, form.city, form.state, showSnackbar]);
+
   const handleEventNameChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const value = event.target.value;
-    setEventName(value);
+    setName(value);
 
     const shortName = value.length < 3;
     if (shortName) {
       setError({
-        field: 'eventName',
+        field: 'name',
         message: 'Nome muito curto',
       });
     } else {
-      removeError('eventName');
+      removeError('name');
     }
+    form.name = value;
   };
 
   const handleEventLocationChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const value = event.target.value;
-    setEventLocation(value);
+    setLocal(value);
 
-    const shortName = value.length < 3;
-    if (shortName) {
+    const isShortName = value.length < 3;
+    if (isShortName) {
       setError({
-        field: 'eventLocation',
+        field: 'local',
         message: 'Local muito curto',
       });
     } else {
-      removeError('eventLocation');
+      removeError('local');
     }
+    form.local = value;
   };
 
   const handleCategoryChange = (
@@ -64,13 +92,14 @@ function PhotosForm() {
   ) => {
     const { value } = event.target;
 
-    setCategory(value);
+    setCategoryId(value);
 
     if (!value) {
-      setError({ field: 'category', message: 'Selecione uma categoria' });
+      setError({ field: 'categoryId', message: 'Selecione uma categoria' });
     } else {
-      removeError('category');
+      removeError('categoryId');
     }
+    form.categoryId = value;
   };
 
   const handleStateChange = (
@@ -89,6 +118,7 @@ function PhotosForm() {
     } else {
       removeError('state');
     }
+    form.state = value;
   };
 
   const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,12 +130,10 @@ function PhotosForm() {
     } else {
       removeError('city');
     }
+    form.city = value;
   };
 
-  const handleDateChange: PickerChangeHandler<
-    Dayjs | null,
-    DateValidationError
-  > = (date: Dayjs | null) => {
+  const handleDateChange = (date: Dayjs | null) => {
     setDate(date);
 
     if (!date) {
@@ -113,6 +141,7 @@ function PhotosForm() {
     } else {
       removeError('date');
     }
+    form.date = date;
   };
 
   return (
@@ -122,27 +151,25 @@ function PhotosForm() {
           <FormRow>
             <Input
               placeholder="Nome do evento"
-              value={eventName}
+              value={name || form.name}
               onChange={handleEventNameChange}
-              error={!!getErrorMessageByFieldName('eventName')}
+              error={!!getErrorMessageByFieldName('name')}
             />
-            {getErrorMessageByFieldName('eventName') && (
-              <ErrorMessage message={getErrorMessageByFieldName('eventName')} />
+            {getErrorMessageByFieldName('name') && (
+              <ErrorMessage message={getErrorMessageByFieldName('name')} />
             )}
           </FormRow>
 
           <FormRow>
             <Input
               placeholder="Local"
-              value={eventLocation}
+              value={local || form.local}
               onChange={handleEventLocationChange}
-              error={!!getErrorMessageByFieldName('eventLocation')}
+              error={!!getErrorMessageByFieldName('local')}
               //   disabled={isSubmitting}
             />
-            {getErrorMessageByFieldName('eventLocation') && (
-              <ErrorMessage
-                message={getErrorMessageByFieldName('eventLocation')}
-              />
+            {getErrorMessageByFieldName('local') && (
+              <ErrorMessage message={getErrorMessageByFieldName('local')} />
             )}
           </FormRow>
 
@@ -150,13 +177,15 @@ function PhotosForm() {
             <DynamicSelect
               emptyMessa={'Selecione a categoria do evento'}
               options={eventCategories}
-              value={category}
+              value={categoryId || form.categoryId}
               onChange={(e) => handleCategoryChange(e)}
-              error={!!getErrorMessageByFieldName('category')}
+              error={!!getErrorMessageByFieldName('categoryId')}
               //   disabled={isSubmitting}
             />
-            {getErrorMessageByFieldName('category') && (
-              <ErrorMessage message={getErrorMessageByFieldName('category')} />
+            {getErrorMessageByFieldName('categoryId') && (
+              <ErrorMessage
+                message={getErrorMessageByFieldName('categoryId')}
+              />
             )}
           </FormRow>
 
@@ -164,7 +193,7 @@ function PhotosForm() {
             <DynamicSelect
               emptyMessa={'Selecione seu Estado'}
               options={states}
-              value={state}
+              value={state || form.state}
               valueType={'value'}
               onChange={(e) => handleStateChange(e)}
               error={!!getErrorMessageByFieldName('state')}
@@ -178,13 +207,13 @@ function PhotosForm() {
           <FormRow>
             <DynamicSelect
               emptyMessa={
-                state === ''
+                state === '' && form.state === ''
                   ? 'Selecione primeiro o estado'
                   : 'Selecione sua Cidade'
               }
               options={cities}
-              disabled={state === ''}
-              value={city}
+              disabled={state === '' && form.state === ''}
+              value={city || form.city}
               valueType={'name'}
               onChange={(e) => handleCityChange(e)}
               error={!!getErrorMessageByFieldName('city')}
@@ -195,7 +224,7 @@ function PhotosForm() {
           </FormRow>
 
           <FormRow>
-            <DatePicker value={date} onChange={handleDateChange} />
+            <DatePicker value={date ?? form.date} onChange={handleDateChange} />
             {getErrorMessageByFieldName('date') && (
               <ErrorMessage message={getErrorMessageByFieldName('date')} />
             )}
@@ -205,5 +234,3 @@ function PhotosForm() {
     </Container>
   );
 }
-
-export default PhotosForm;

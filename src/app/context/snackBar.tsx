@@ -21,7 +21,7 @@ export function SnackbarProvider(props: StyledSnackbarProps) {
 
   const showSnackbar = (
     message: string | string[],
-    color?: 'success' | 'danger',
+    color?: 'success' | 'danger' | 'warning',
     autoHideDuration?: number,
   ) => {
     setSnackbarState({ open: true, message, color, autoHideDuration });

@@ -22,7 +22,22 @@ export const ContentContainer = styled.div`
 
 export const DragDropContainer = styled.div`
   width: 100%;
-  padding: 8px;
+  padding-inline: 8px;
+`;
+
+export const TextContainer = styled.div`
+  width: 100%;
+  padding-inline: 8px;
+  margin-top: 16px;
+`;
+
+export const Text = styled.span`
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.primary.main};
+
+  strong {
+    color: ${({ theme }) => theme.colors.primary.light};
+  }
 `;
 
 export const FilesContainer = styled.div`
@@ -33,6 +48,12 @@ export const FilesContainer = styled.div`
 `;
 
 export const FileUploadContainer = styled.div`
-  margin-top: 16px;
+  margin-top: 8px;
   width: 100%;
+
+  &.file-removed {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: calc(100% - 2px);
+  }
 `;

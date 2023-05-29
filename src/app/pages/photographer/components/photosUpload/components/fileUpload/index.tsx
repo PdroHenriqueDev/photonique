@@ -7,19 +7,33 @@ import {
   FileNameText,
   FileSizeText,
 } from './styles';
+import { FileUploadProps } from 'app/models/components/fileUpload.model';
 
-function FileUpload() {
+export default function FileUpload({
+  isSubmitting = false,
+  onRemove,
+  file,
+  progress,
+}: FileUploadProps) {
+  const handleRemoveClick = () => {
+    onRemove();
+  };
+
+  const { name, size } = file;
+
+  const bytesToMB = (bytes: number) => {
+    return (bytes / (1024 * 1024)).toFixed(2);
+  };
+
   return (
     <Container>
       <PhotoIcon fontSize="large" className="photo-icon" />
-      <ContentContainer>
-        <FileNameText>nome do arquivo</FileNameText>
-        <LinearBuffer />
-        <FileSizeText>12.4 de 15.2MB</FileSizeText>
+      <ContentContainer isSubmitting={isSubmitting}>
+        <FileNameText>{name}</FileNameText>
+        {isSubmitting && <LinearBuffer progress={progress} />}
+        <FileSizeText>{bytesToMB(size)}MB</FileSizeText>
       </ContentContainer>
-      <CloseIcon className="close-icon" />
+      <CloseIcon className="close-icon" onClick={handleRemoveClick} />
     </Container>
   );
 }
-
-export default FileUpload;

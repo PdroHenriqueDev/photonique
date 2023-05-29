@@ -1,6 +1,7 @@
 import { FilesDragAndDropProps } from 'app/models/components/filesDragAndDrop';
 import { useEffect, useRef, useState } from 'react';
 import { ClickText, Container, Text } from './styles';
+import { v4 as uuidv4 } from 'uuid';
 
 function FilesDragAndDrop({ onFilesSelect }: FilesDragAndDropProps) {
   const [dragging, setDragging] = useState(false);
@@ -20,9 +21,15 @@ function FilesDragAndDrop({ onFilesSelect }: FilesDragAndDropProps) {
     };
   }, []);
 
-  const handleFiles = (files: any) => {
+  const handleFiles = (files: File[]) => {
     const selectedFiles = Array.from(files);
-    onFilesSelect(selectedFiles);
+    const filesMapped = selectedFiles.map((selectedFile) => ({
+      id: uuidv4(),
+      progress: 0,
+      file: selectedFile,
+    }));
+    onFilesSelect(filesMapped);
+    if (inputRef?.current) inputRef.current.value = '';
   };
 
   const handleDragOver = (e: {
