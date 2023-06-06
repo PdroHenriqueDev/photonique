@@ -14,7 +14,7 @@ import {
 } from './styles';
 import ErrorMessage from '@components/errorMessage';
 import { SnackbarContext } from '../../../../context/snackBar';
-import PhotographerService from '../../../../services/PhotographerService';
+import AuthService from 'app/services/AuthService';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -51,6 +51,10 @@ function LoginForm() {
     navigate('/cadastrar');
   };
 
+  const photographerRoute = () => {
+    navigate('/fotografos');
+  };
+
   const isFormValid = errors.length === 0 && email.length && password.length;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -59,9 +63,11 @@ function LoginForm() {
     setIsSubmitting(true);
 
     try {
-      const postRequest = await PhotographerService.login(email, password);
-      const { message } = postRequest.data;
+      const postRequest = await AuthService.login(email, password);
+      const { message, token } = postRequest.data;
+      localStorage.setItem('token', token);
       showSnackbar(message, 'success');
+      photographerRoute();
     } catch (error: any) {
       const { message } = error.response.data;
       showSnackbar(message, 'danger');

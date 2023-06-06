@@ -1,7 +1,14 @@
-import Routes from './routes';
+import LoginForm from './components/loginForm';
+import { Container, ContentContainer } from './styles';
 
 function Login() {
-  return <Routes />;
+  return (
+    <Container>
+      <ContentContainer>
+        <LoginForm />
+      </ContentContainer>
+    </Container>
+  );
 }
 
 export default Login;

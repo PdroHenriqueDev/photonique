@@ -19,13 +19,6 @@ class PhotographerService {
     );
   }
 
-  login(email: string, password: string) {
-    return axios.post(`${this.API_PHOTONIQUE}/login`, {
-      email,
-      password,
-    });
-  }
-
   createEvent(event: EventFormProps) {
     const eventMapper = EventMapper.toDomain(event);
     return axios.post(
