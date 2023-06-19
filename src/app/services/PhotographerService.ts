@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import axios, { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig } from 'axios';
+import interceptor from './interceptor';
 import { PhotographerProps } from 'app/models/photographer/photographer.mode';
 import PhotographerMapper from './mappers/PhotographerMapper';
 import { ServiceResponseProps } from 'app/models/service/serviceResponse.model';
@@ -8,12 +9,11 @@ import EventMapper from './mappers/EventMapper';
 
 class PhotographerService {
   API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
+  axios = new interceptor();
 
-  createPhotographer(
-    photographer: PhotographerProps,
-  ): Promise<ServiceResponseProps> {
+  createPhotographer(photographer: PhotographerProps) {
     const photographerMapper = PhotographerMapper.toDomain(photographer);
-    return axios.post(
+    return this.axios.post(
       `${this.API_PHOTONIQUE}/photographers/create`,
       photographerMapper,
     );
@@ -21,7 +21,7 @@ class PhotographerService {
 
   createEvent(event: EventFormProps) {
     const eventMapper = EventMapper.toDomain(event);
-    return axios.post(
+    return this.axios.post(
       `${this.API_PHOTONIQUE}/photographers/event`,
       eventMapper,
     );
@@ -31,7 +31,7 @@ class PhotographerService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return axios.post(
+    return this.axios.post(
       `${this.API_PHOTONIQUE}/photographers/photo/upload`,
       formData,
       {
