@@ -64,7 +64,11 @@ function LoginForm() {
 
     try {
       const postRequest = await AuthService.login(email, password);
-      const { message, token } = postRequest.data;
+      const {
+        message,
+        data: { token, user },
+      } = postRequest.data;
+      localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
       showSnackbar(message, 'success');
       photographerRoute();
