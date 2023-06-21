@@ -5,7 +5,7 @@ class StaticService {
   API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
 
   getCategories(): Promise<ServiceResponseProps> {
-    return axios.get(`${this.API_PHOTONIQUE}/static-data`);
+    return axios.get(`${this.API_PHOTONIQUE}/static-data/categories`);
   }
 }
 
