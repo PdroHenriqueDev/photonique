@@ -1,4 +1,3 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,18 +12,31 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Logo, StyledPage, StyledContainer, PhotographerPage } from './styles';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const pages = ['Inicío'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+  { displayName: 'Perfil', event: 'profile' },
+  { displayName: 'Conta', event: 'count' },
+  { displayName: 'Sair', event: 'sign out' },
+];
 
 function NavBar({ isPhotographer = true }) {
   const navigate = useNavigate();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [user, setUser] = useState({
+    name: '',
+  });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
+  }, []);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -39,6 +51,18 @@ function NavBar({ isPhotographer = true }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleMenuClick = (event: string) => {
+    const command: { [key: string]: () => void } = {
+      profile: () => {},
+      count: () => {},
+      'sign out': () => {
+        localStorage.clear();
+        navigate('/login');
+      },
+    };
+    return command[event];
   };
   return (
     <StyledContainer>
@@ -102,9 +126,9 @@ function NavBar({ isPhotographer = true }) {
             )}
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="Abra as configurações">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={user.name} src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -124,8 +148,13 @@ function NavBar({ isPhotographer = true }) {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                  <MenuItem
+                    key={setting.event}
+                    onClick={handleMenuClick(setting.event)}
+                  >
+                    <Typography textAlign="center">
+                      {setting.displayName}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
