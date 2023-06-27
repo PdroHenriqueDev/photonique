@@ -3,7 +3,6 @@ import { AxiosRequestConfig } from 'axios';
 import interceptor from './interceptor';
 import { PhotographerProps } from 'app/models/photographer/photographer.mode';
 import PhotographerMapper from './mappers/PhotographerMapper';
-import { ServiceResponseProps } from 'app/models/service/serviceResponse.model';
 import { EventFormProps } from 'app/models/components/eventForm.model';
 import EventMapper from './mappers/EventMapper';
 

@@ -102,6 +102,11 @@ export default function HorizontalLinearStepper() {
     setFiles(filesSelected);
   };
 
+  const handleFile = (photo: PhotoProps) => {
+    const newFiles = files.filter((file) => file.id !== photo.id);
+    setFiles([...newFiles, photo]);
+  };
+
   const createEvent = async (eventForm: EventFormProps) => {
     setIsSubmitting(true);
     try {
@@ -131,7 +136,7 @@ export default function HorizontalLinearStepper() {
                 (progressEvent.loaded * 100) / progressEvent.total,
               );
               photo.progress = progressRequest;
-              handleFilesSelect(photos);
+              handleFile(photo);
             }
           },
         }).then((res) => {

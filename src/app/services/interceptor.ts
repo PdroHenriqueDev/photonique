@@ -3,10 +3,11 @@ import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 class AxiosInterceptor {
   private api: AxiosInstance;
   private PI_PHOTONIQUE: string;
-  private token: string = localStorage.getItem('token') ?? '';
+  private token = '';
 
   constructor() {
     this.PI_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
+    this.token = localStorage.getItem('token') ?? '';
 
     this.api = axios.create({
       baseURL: this.PI_PHOTONIQUE,
