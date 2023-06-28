@@ -12,34 +12,24 @@ class PhotographerService {
 
   createPhotographer(photographer: PhotographerProps) {
     const photographerMapper = PhotographerMapper.toDomain(photographer);
-    return this.axios.post(
-      `${this.API_PHOTONIQUE}/photographers/create`,
-      photographerMapper,
-    );
+    return this.axios.post('/photographers/create', photographerMapper);
   }
 
   createEvent(event: EventFormProps) {
     const eventMapper = EventMapper.toDomain(event);
-    return this.axios.post(
-      `${this.API_PHOTONIQUE}/photographers/event`,
-      eventMapper,
-    );
+    return this.axios.post('/photographers/event', eventMapper);
   }
 
   uploadFile(file: File, config?: AxiosRequestConfig) {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.axios.post(
-      `${this.API_PHOTONIQUE}/photographers/photo/upload`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        ...config,
+    return this.axios.post('/photographers/photo/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    );
+      ...config,
+    });
   }
 }
 
