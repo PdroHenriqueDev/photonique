@@ -126,24 +126,31 @@ export default function HorizontalLinearStepper() {
 
   const uploadPhotos = async (photos: PhotoProps[]) => {
     setIsSubmitting(true);
+
     try {
       photos.forEach(async (photo) => {
-        const { file } = photo;
-        await PhotographerService.uploadFile(file, {
-          onUploadProgress: (progressEvent) => {
-            if (progressEvent?.total) {
-              const progressRequest = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total,
-              );
-              photo.progress = progressRequest;
-              handleFile(photo);
-            }
-          },
-        }).then((res) => {
-          // console.log('got here in uploadPhotos', res);
-        });
+        if (!photo.isSent) {
+          const { file } = photo;
+          await PhotographerService.uploadFile(file, {
+            onUploadProgress: (progressEvent) => {
+              if (progressEvent?.total) {
+                const progressRequest = Math.round(
+                  (progressEvent.loaded * 100) / progressEvent.total,
+                );
+                photo.progress = progressRequest;
+                handleFile(photo);
+              }
+            },
+          })
+            .then(() => {
+              photo.isSent = true;
+            })
+            .catch(() => {
+              showSnackbar('Error no envio', 'danger');
+            });
+        }
       });
-    } catch {
+      changeStep();
     } finally {
       setIsSubmitting(false);
     }

@@ -13,4 +13,5 @@ export interface PhotoProps {
   id: string;
   file: File;
   progress: number;
+  isSent?: boolean;
 }
