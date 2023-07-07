@@ -1,5 +1,5 @@
 import { CepProps } from 'app/models/service/cepService.model';
-import axios from 'axios';
+import axios from './interceptor';
 import CepMappers from './mappers/CepMappers';
 
 class CepService {

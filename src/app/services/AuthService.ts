@@ -1,18 +1,17 @@
-import interceptor from './interceptor';
+import axios from './interceptor';
 
 class AuthService {
   API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
-  axios = new interceptor();
 
   login(email: string, password: string) {
-    return this.axios.post(`${this.API_PHOTONIQUE}/login`, {
+    return axios.post(`${this.API_PHOTONIQUE}/login`, {
       email,
       password,
     });
   }
 
   verifyToken(token: string) {
-    return this.axios.get(`${this.API_PHOTONIQUE}/login/verify-token`, {
+    return axios.get(`${this.API_PHOTONIQUE}/login/verify-token`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

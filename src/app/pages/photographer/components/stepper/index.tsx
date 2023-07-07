@@ -13,6 +13,7 @@ import { SnackbarContext } from 'app/context/snackBar';
 import PhotographerService from '../../../../services/PhotographerService';
 import Spinner from '@components/spinner';
 import { PhotoProps } from 'app/models/components/photosUpload.mode';
+import Final from '../final';
 
 const steps = [
   'Qualifique suas fotos',
@@ -210,6 +211,7 @@ export default function HorizontalLinearStepper() {
                     isSubmitting={isSubmitting}
                   />
                 )}
+                {activeStep === 2 && <Final />}
               </SetpContentContainer>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

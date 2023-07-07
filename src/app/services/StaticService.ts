@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { ServiceResponseProps } from 'app/models/service/serviceResponse.model';
+import axios from './interceptor';
 
 class StaticService {
   API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
 
-  getCategories(): Promise<ServiceResponseProps> {
-    return axios.get(`${this.API_PHOTONIQUE}/static-data/categories`);
+  getCategories() {
+    return axios.get('/static-data/categories');
   }
 }
 

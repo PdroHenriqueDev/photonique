@@ -60,4 +60,4 @@ class AxiosInterceptor {
   }
 }
 
-export default AxiosInterceptor;
+export default new AxiosInterceptor();
