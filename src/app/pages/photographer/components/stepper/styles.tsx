@@ -19,7 +19,6 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* border: 1px solid red; */
 
   .step-button {
     color: ${({ theme }) => theme.colors.primary.dark};

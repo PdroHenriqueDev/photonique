@@ -10,6 +10,7 @@ export const ContentContainer = styled.div`
   width: 400px;
   height: 120px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 30px;
@@ -17,8 +18,15 @@ export const ContentContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.primary.dark};
 `;
 
-export const Text = styled.p`
-  font-size: 28px;
+export const TextTitle = styled.h2`
+  font-size: 24px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.white};
+  text-align: center;
+`;
+
+export const Text = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.primary.lighter};
+  margin-top: 8px;
 `;

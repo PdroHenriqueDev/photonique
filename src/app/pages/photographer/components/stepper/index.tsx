@@ -14,6 +14,7 @@ import PhotographerService from '../../../../services/PhotographerService';
 import Spinner from '@components/spinner';
 import { PhotoProps } from 'app/models/components/photosUpload.mode';
 import Final from '../final';
+import { useNavigate } from 'react-router-dom';
 
 const steps = [
   'Qualifique suas fotos',
@@ -34,9 +35,14 @@ export default function HorizontalLinearStepper() {
   });
   const [files, setFiles] = useState<PhotoProps[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [eventId, setEventId] = useState('');
 
   const { showSnackbar } = useContext(SnackbarContext);
+
+  const navigate = useNavigate();
+
+  const handleRoute = (eventId: string) => {
+    navigate(eventId);
+  };
 
   const validateSteps = (): boolean => {
     if (activeStep === 0) {
@@ -113,8 +119,10 @@ export default function HorizontalLinearStepper() {
     try {
       const postRequest = await PhotographerService.createEvent(eventForm);
       const { message, data } = postRequest.data;
-      setEventId(data);
+      const { eventId } = data;
+
       showSnackbar(message, 'success');
+      handleRoute(eventId);
       changeStep();
     } catch (error: any) {
       const { message } = error.response.data;

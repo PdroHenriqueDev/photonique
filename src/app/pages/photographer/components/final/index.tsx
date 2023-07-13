@@ -1,10 +1,11 @@
-import { Container, ContentContainer, Text } from './styles';
+import { Container, ContentContainer, Text, TextTitle } from './styles';
 
 export default function Final() {
   return (
     <Container>
       <ContentContainer>
-        <Text>Suas fotos foram enviadas!</Text>
+        <TextTitle>Tudoo certo! Suas fotos foram enviadas</TextTitle>
+        <Text>Você verá suas fotos no painel</Text>
       </ContentContainer>
     </Container>
   );
