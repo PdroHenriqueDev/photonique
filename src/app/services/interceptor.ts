@@ -2,18 +2,25 @@ import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 class AxiosInterceptor {
   private api: AxiosInstance;
-  private PI_PHOTONIQUE: string;
-  private token: string = localStorage.getItem('token') ?? '';
+  private API_PHOTONIQUE: string;
 
   constructor() {
-    this.PI_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
+    this.API_PHOTONIQUE = import.meta.env.VITE_API_PHOTONIQUE;
 
     this.api = axios.create({
-      baseURL: this.PI_PHOTONIQUE,
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
+      baseURL: this.API_PHOTONIQUE,
     });
+
+    this.api.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('token');
+        config.headers.Authorization = token ? `Bearer ${token}` : '';
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      },
+    );
 
     this.api.interceptors.response.use(
       (response: AxiosResponse) => response,
@@ -53,4 +60,4 @@ class AxiosInterceptor {
   }
 }
 
-export default AxiosInterceptor;
+export default new AxiosInterceptor();

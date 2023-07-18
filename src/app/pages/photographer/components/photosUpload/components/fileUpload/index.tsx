@@ -30,7 +30,9 @@ export default function FileUpload({
       <PhotoIcon fontSize="large" className="photo-icon" />
       <ContentContainer isSubmitting={isSubmitting}>
         <FileNameText>{name}</FileNameText>
-        {isSubmitting && <LinearBuffer progress={progress} />}
+        {(isSubmitting || progress === 100) && (
+          <LinearBuffer progress={progress} />
+        )}
         <FileSizeText>{bytesToMB(size)}MB</FileSizeText>
       </ContentContainer>
       <CloseIcon className="close-icon" onClick={handleRemoveClick} />

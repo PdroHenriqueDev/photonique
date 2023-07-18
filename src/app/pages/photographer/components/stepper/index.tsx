@@ -13,6 +13,8 @@ import { SnackbarContext } from 'app/context/snackBar';
 import PhotographerService from '../../../../services/PhotographerService';
 import Spinner from '@components/spinner';
 import { PhotoProps } from 'app/models/components/photosUpload.mode';
+import Final from '../final';
+import { useNavigate } from 'react-router-dom';
 
 const steps = [
   'Qualifique suas fotos',
@@ -33,9 +35,14 @@ export default function HorizontalLinearStepper() {
   });
   const [files, setFiles] = useState<PhotoProps[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [eventId, setEventId] = useState('');
 
   const { showSnackbar } = useContext(SnackbarContext);
+
+  const navigate = useNavigate();
+
+  const handleRoute = (eventId: string) => {
+    navigate(eventId);
+  };
 
   const validateSteps = (): boolean => {
     if (activeStep === 0) {
@@ -102,13 +109,20 @@ export default function HorizontalLinearStepper() {
     setFiles(filesSelected);
   };
 
+  const handleFile = (photo: PhotoProps) => {
+    const newFiles = files.filter((file) => file.id !== photo.id);
+    setFiles([...newFiles, photo]);
+  };
+
   const createEvent = async (eventForm: EventFormProps) => {
     setIsSubmitting(true);
     try {
       const postRequest = await PhotographerService.createEvent(eventForm);
       const { message, data } = postRequest.data;
-      setEventId(data);
+      const { eventId } = data;
+
       showSnackbar(message, 'success');
+      handleRoute(eventId);
       changeStep();
     } catch (error: any) {
       const { message } = error.response.data;
@@ -121,24 +135,31 @@ export default function HorizontalLinearStepper() {
 
   const uploadPhotos = async (photos: PhotoProps[]) => {
     setIsSubmitting(true);
+
     try {
       photos.forEach(async (photo) => {
-        const { file } = photo;
-        await PhotographerService.uploadFile(file, {
-          onUploadProgress: (progressEvent) => {
-            if (progressEvent?.total) {
-              const progressRequest = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total,
-              );
-              photo.progress = progressRequest;
-              handleFilesSelect(photos);
-            }
-          },
-        }).then((res) => {
-          // console.log('got here in uploadPhotos', res);
-        });
+        if (!photo.isSent) {
+          const { file } = photo;
+          await PhotographerService.uploadFile(file, {
+            onUploadProgress: (progressEvent) => {
+              if (progressEvent?.total) {
+                const progressRequest = Math.round(
+                  (progressEvent.loaded * 100) / progressEvent.total,
+                );
+                photo.progress = progressRequest;
+                handleFile(photo);
+              }
+            },
+          })
+            .then(() => {
+              photo.isSent = true;
+            })
+            .catch(() => {
+              showSnackbar('Error no envio', 'danger');
+            });
+        }
       });
-    } catch {
+      changeStep();
     } finally {
       setIsSubmitting(false);
     }
@@ -198,6 +219,7 @@ export default function HorizontalLinearStepper() {
                     isSubmitting={isSubmitting}
                   />
                 )}
+                {activeStep === 2 && <Final />}
               </SetpContentContainer>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
